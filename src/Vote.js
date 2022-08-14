@@ -6,8 +6,12 @@ class Vote extends Component {
   state = {
     participant: [],
   };
+
   handlePost = async (points) => {
     const { id } = this.props.match.params;
+    const voted = { person: id, voted: true };
+    localStorage.setItem("voted" + id, JSON.stringify(voted));
+
     //console.log(this.state.participant);
     const originalParticipant = this.state.participant;
     const participant = { ...this.state.participant };
@@ -34,6 +38,11 @@ class Vote extends Component {
     this.loadParticipant();
   }
   render() {
+    const { id } = this.props.match.params;
+    if (
+      `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
+    )
+      return "Alread voted";
     return (
       <div>
         <button onClick={() => this.handlePost(1)}>1</button>
