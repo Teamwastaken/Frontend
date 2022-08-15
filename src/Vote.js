@@ -48,7 +48,7 @@ class Vote extends Component {
     )
       return "Alread voted";
     if (this.state.participant.length === 0)
-      return "Person could not be found.";
+      return <h1>Person could not be found.</h1>;
     return (
       <div>
         <button onClick={() => this.handlePost(1)}>1</button>
