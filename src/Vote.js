@@ -47,7 +47,8 @@ class Vote extends Component {
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
     )
       return "Alread voted";
-
+    if (this.state.participant.length === 0)
+      return "Person could not be found.";
     return (
       <div>
         <button onClick={() => this.handlePost(1)}>1</button>
