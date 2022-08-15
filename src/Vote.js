@@ -27,22 +27,27 @@ class Vote extends Component {
   };
   loadParticipant = async () => {
     const { id } = this.props.match.params;
-    const { data: participant } = await axios.get(
-      config.apiUrl + "/api/persons/" + id
-    );
-    this.setState({ participant });
+    try {
+      const { data: participant } = await axios.get(
+        config.apiUrl + "/api/persons/" + id
+      );
+      this.setState({ participant });
+    } catch (ex) {
+      alert("This person could not be found");
+    }
+
     //console.log(participant);
     //console.log(this.state.participant);
   };
-  componentDidMount() {
-    this.loadParticipant();
-  }
+
   render() {
+    this.loadParticipant();
     const { id } = this.props.match.params;
     if (
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
     )
       return "Alread voted";
+
     return (
       <div>
         <button onClick={() => this.handlePost(1)}>1</button>
