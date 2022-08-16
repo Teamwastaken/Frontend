@@ -5,6 +5,7 @@ import Home from "./home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Ranking from "./ranking";
 import VoteWrapper from "./Vote";
+import VoteWrapperLs from "./VoteLSj";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,6 +14,7 @@ root.render(
       <Route path="/" element={<Home />} />
       <Route path="/ranking" element={<Ranking />} />
       <Route path="/voting/:id" element={<VoteWrapper />} />
+      <Route path="/voting/:id/noLocalStorage" element={<VoteWrapperLs />} />
     </Routes>
   </BrowserRouter>
 );
