@@ -18,16 +18,16 @@ class Vote extends Component {
     localStorage.setItem("voted" + id, JSON.stringify(voted));
 
     //console.log(this.state.participant);
-    const originalParticipant = this.state.participant;
-    const participant = { ...this.state.participant };
-    participant.score += points;
-    this.setState({ participant });
+    // const originalParticipant = this.state.participant;
+    //  const participant = { ...this.state.participant };
+    // participant.score += points;
+    //  this.setState({ participant });
     const obj = { person: id, score: points };
     try {
       await axios.post(config.apiUrl + "/api/persons/", obj);
     } catch (ex) {
       alert("Something failed with your voting request.");
-      this.setState({ participant: originalParticipant });
+      //   this.setState({ participant: originalParticipant });
     }
   };
   loadParticipant = async () => {
