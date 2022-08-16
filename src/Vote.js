@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, { Component } from "react";
-
+import { useParams } from "react-router-dom";
 import config from "./config.json";
+
+function VoteWrapper() {
+  let params = useParams();
+  return <Vote id={params.id} />;
+}
+
 class Vote extends Component {
   state = {
     participant: [],
   };
-
   handlePost = async (points) => {
-    const { id } = this.props.match.params;
+    const { id } = this.props;
     const voted = { person: id, voted: true };
     localStorage.setItem("voted" + id, JSON.stringify(voted));
 
@@ -26,10 +31,9 @@ class Vote extends Component {
     }
   };
   loadParticipant = async () => {
-    const { id } = this.props.match.params;
     try {
       const { data: participant } = await axios.get(
-        config.apiUrl + "/api/persons/" + id
+        config.apiUrl + "/api/persons/" + this.props.id
       );
       this.setState({ participant });
     } catch (ex) {
@@ -41,8 +45,9 @@ class Vote extends Component {
   };
 
   render() {
+    const { id } = this.props;
     this.loadParticipant();
-    const { id } = this.props.match.params;
+
     if (
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
     )
@@ -64,4 +69,4 @@ class Vote extends Component {
   }
 }
 
-export default Vote;
+export default VoteWrapper;
