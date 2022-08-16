@@ -21,7 +21,11 @@ class Ranking extends Component {
         {ordered.map((participant) => (
           <div key={participant._id}>
             {" "}
-            {participant.rank + ". " + participant.name}
+            {participant.rank +
+              ". " +
+              participant.name +
+              "   " +
+              participant.score}
           </div>
         ))}
       </div>
