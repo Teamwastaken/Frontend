@@ -15,7 +15,7 @@ class Ranking extends Component {
 
   render() {
     //sort it
-    const ordered = _.orderBy(this.state.participants, "rank", "asc");
+    const ordered = _.orderBy(this.state.participants, "score", "desc");
     return (
       <div>
         {ordered.map((participant) => (
