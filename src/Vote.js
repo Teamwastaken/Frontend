@@ -51,7 +51,12 @@ class Vote extends Component {
     if (
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
     )
-      return "Alread voted";
+      return (
+        <div>
+          <h1>Already Voted</h1>
+          <h2>Score: {this.state.participant.score}</h2>
+        </div>
+      );
     if (this.state.participant.length === 0)
       return <h1>Person could not be found.</h1>;
     return (
