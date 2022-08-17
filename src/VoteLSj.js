@@ -37,7 +37,6 @@ class Vote extends Component {
   };
 
   render() {
-    const { id } = this.props;
     this.loadParticipant();
 
     if (this.state.participant.length === 0)

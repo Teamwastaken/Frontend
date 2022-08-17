@@ -27,6 +27,7 @@ class Vote extends Component {
       await axios.post(config.apiUrl + "/api/persons/", obj);
     } catch (ex) {
       alert("Something failed with your voting request.");
+      localStorage.removeItem("voted" + id);
       //   this.setState({ participant: originalParticipant });
     }
   };
