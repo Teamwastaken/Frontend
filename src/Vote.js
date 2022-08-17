@@ -44,10 +44,11 @@ class Vote extends Component {
     //console.log(participant);
     //console.log(this.state.participant);
   };
-
+  componentDidMount() {
+    this.loadParticipant();
+  }
   render() {
     const { id } = this.props;
-    this.loadParticipant();
 
     if (
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
