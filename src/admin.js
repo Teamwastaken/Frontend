@@ -58,7 +58,9 @@ class Admin extends Component {
                   <div className="box-seperate">
                     <div className="element"> {participant.name}</div>
                     <button
-                      className="element"
+                      className={
+                        participant.allowVotes ? "element" : "element red"
+                      }
                       onClick={() => this.handleUpdate(participant)}
                     >
                       {participant.allowVotes ? "enabled" : "disabled"}

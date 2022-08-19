@@ -39,6 +39,9 @@ button {
 button:hover {
   background: #059862;
 }
+.red {
+  background: red;
+}
 
 .popup {
   display: grid;
