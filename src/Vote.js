@@ -16,19 +16,17 @@ class Vote extends Component {
     const { id } = this.props;
     const voted = { person: id, voted: true };
     localStorage.setItem("voted" + id, JSON.stringify(voted));
-
-    //console.log(this.state.participant);
-    // const originalParticipant = this.state.participant;
-    //  const participant = { ...this.state.participant };
-    // participant.score += points;
-    //  this.setState({ participant });
     const obj = { person: id, score: points };
     try {
       await axios.post(config.apiUrl + "/api/persons/", obj);
-    } catch (ex) {
-      alert("Something failed with your voting request.");
+    } catch (error) {
+      if (error.response.data.message === "Votes arent allowed.") {
+        const participant = { ...this.state.participant };
+        participant.allowVotes = false;
+        this.setState({ participant });
+      }
+      console.log(error.response.data.message);
       localStorage.removeItem("voted" + id);
-      //   this.setState({ participant: originalParticipant });
     }
   };
   loadParticipant = async () => {
@@ -40,16 +38,12 @@ class Vote extends Component {
     } catch (ex) {
       alert("This person could not be found");
     }
-
-    //console.log(participant);
-    //console.log(this.state.participant);
   };
   componentDidMount() {
     this.loadParticipant();
   }
   render() {
     const { id } = this.props;
-
     if (
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
     )
@@ -61,6 +55,15 @@ class Vote extends Component {
       );
     if (this.state.participant.length === 0)
       return <h1>Person could not be found.</h1>;
+    if (this.state.participant.length === 0)
+      return <h1>Person could not be found.</h1>;
+    if (this.state.participant.allowVotes === false)
+      return (
+        <div>
+          <h1>Votes aren't allowed at the moment.</h1>
+          <button onClick={() => this.loadParticipant()}>Check again</button>
+        </div>
+      );
     return (
       <div>
         <button onClick={() => this.handlePost(1)}>1</button>
