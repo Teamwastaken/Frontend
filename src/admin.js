@@ -2,16 +2,25 @@ import React, { Component } from "react";
 import "./admin.css";
 import axios from "axios";
 import config from "./config.json";
+import { reject } from "lodash";
 
 class Admin extends Component {
   state = { popup: false, participants: [], value: "" };
   async componentDidMount() {
     //get data for participants
-    const { data: participants } = await axios.get(
-      config.apiUrl + "/api/persons"
-    );
-    this.setState({ participants });
+    this.getParticipants();
   }
+  getParticipants = async () => {
+    try {
+      const { data: participants } = await axios.get(
+        config.apiUrl + "/api/persons"
+      );
+      this.setState({ participants });
+      this.forceUpdate();
+    } catch (error) {
+      alert(error);
+    }
+  };
   handlePost = async () => {
     const obj = { name: this.state.value };
     console.log(obj, "post");
@@ -23,8 +32,15 @@ class Admin extends Component {
     }
   };
   handleUpdate = async (participant) => {
-    axios.patch(config.apiUrl + "/api/persons/" + participant.id, {
-      allowVotes: !participant.allowVotes,
+    const p = new Promise((resolve, reject) => {
+      axios.patch(config.apiUrl + "/api/persons/" + participant.id, {
+        allowVotes: !participant.allowVotes,
+      });
+    });
+    p.then(() => {
+      setTimeout(() => {
+        this.getParticipants();
+      }, 1000);
     });
   };
   handleChange = (event) => {
