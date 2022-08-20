@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./admin.css";
+import "./css/admin.css";
 import axios from "axios";
-import config from "./config.json";
+import config from "./config/config.json";
 import _ from "lodash";
 
 class Admin extends Component {

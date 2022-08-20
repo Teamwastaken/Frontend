@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
-import config from "./config.json";
+import config from "./config/config.json";
 
 function VoteWrapper() {
   let params = useParams();

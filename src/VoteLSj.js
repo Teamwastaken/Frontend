@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
-import config from "./config.json";
-import "./voteLSj.css";
+import config from "./config/config.json";
+import "./css/voteLSj.css";
 
 function VoteWrapperLs() {
   let params = useParams();
