@@ -8,7 +8,43 @@ header {
 }
 .boxes {
   display: grid;
+  width: fit-content;
   grid-template-columns: auto auto auto;
+}
+@media screen and (min-width: 300px) {
+  .boxes {
+    grid-template-columns: auto;
+  }
+}
+@media screen and (min-width: 600px) {
+  .boxes {
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (min-width: 900px) {
+  .boxes {
+    grid-template-columns: auto auto auto;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .boxes {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .boxes {
+    grid-template-columns: auto auto auto auto auto;
+  }
+}
+@media screen and (min-width: 1800px) {
+  .boxes {
+    grid-template-columns: auto auto auto auto auto auto;
+  }
+}
+@media screen and (min-width: 2100px) {
+  .boxes {
+    grid-template-columns: auto auto auto auto auto auto auto;
+  }
 }
 
 .box {
