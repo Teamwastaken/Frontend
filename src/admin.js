@@ -2,12 +2,19 @@ import React, { Component } from "react";
 import "./admin.css";
 import axios from "axios";
 import config from "./config.json";
+import _ from "lodash";
 
 class Admin extends Component {
-  state = { popup: false, participants: [], value: "" };
+  state = {
+    popup1: false,
+    popup2: false,
+    deleteId: 0,
+    participants: [],
+    value: "",
+  };
   async componentDidMount() {
-    //get data for participants
     this.getParticipants();
+    document.addEventListener("keydown", this.escFunction, false);
   }
   getParticipants = async () => {
     try {
@@ -20,9 +27,10 @@ class Admin extends Component {
       alert(error);
     }
   };
-  handleDelete = async (personId) => {
+  handleDelete = async () => {
     try {
-      await axios.delete(config.apiUrl + "/api/persons/" + personId);
+      await axios.delete(config.apiUrl + "/api/persons/" + this.state.deleteId);
+      console.log(this.state.deleteId);
     } catch (error) {}
   };
   handlePost = async () => {
@@ -53,24 +61,46 @@ class Admin extends Component {
   handleChange = (event) => {
     this.setState({ value: event.target.value });
   };
+  handleSubmit1 = (event) => {
+    event.preventDefault();
+    this.setState({ popup1: false });
+    console.log("form submitted ✅");
+  };
+  handleSubmit2 = (event) => {
+    event.preventDefault();
+    this.setState({ popup2: false });
+    console.log("form submitted ✅");
+  };
+  escFunction = (event) => {
+    if (event.key === "Escape") {
+      this.setState({ popup1: false });
+      this.setState({ popup2: false });
+    }
+  };
   render() {
-    let classes = this.getBadgeClasses();
+    const ordered = _.orderBy(this.state.participants, "id", "asc");
     return (
       <div>
         <header>
           <h1>Dashboard</h1>
           <button
             className="element"
-            onClick={() => this.setState({ popup: true })}
+            onClick={() => this.setState({ popup1: true })}
           >
             New User
           </button>
         </header>
         <div className="boxes">
-          {this.state.participants.map((participant) => (
+          {ordered.map((participant) => (
             <div key={participant._id}>
               <div className="box">
-                <h1 className="id">#Id {participant.id}</h1>
+                <a
+                  href={"voting/" + participant.id + "/noLocalstorage"}
+                  target="_blanc"
+                >
+                  {" "}
+                  <h1 className="id">#Id {participant.id}</h1>
+                </a>
                 <div className="elementWrapper">
                   {" "}
                   <div className="box-seperate">
@@ -93,7 +123,9 @@ class Admin extends Component {
                 <div className="button-container">
                   <button
                     className="deleteButton"
-                    onClick={() => this.handleDelete(participant.id)}
+                    onClick={() =>
+                      this.setState({ popup2: true, deleteId: participant.id })
+                    }
                   >
                     Delete
                   </button>
@@ -101,22 +133,48 @@ class Admin extends Component {
               </div>
             </div>
           ))}
-          <div className={classes}>
+          <form
+            onSubmit={this.handleSubmit1}
+            className={this.getBadgeClasses()}
+          >
             <input
               placeholder="Name"
               value={this.state.value}
               onChange={this.handleChange}
             />
-            <button className="submit" onClick={() => this.handlePost()}>
+            <button
+              className="submit"
+              type="submit"
+              onClick={() => this.handlePost()}
+            >
               Submit
             </button>
-          </div>
+          </form>
+          <form
+            onSubmit={this.handleSubmit2}
+            className={this.getDeleteClasses()}
+          >
+            <p>Sure you want to delete this user?</p>
+            <div className="button-container">
+              <button
+                className="deleteButton"
+                type="submit"
+                onClick={() => this.handleDelete()}
+              >
+                Yeah delete!
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     );
   }
   getBadgeClasses() {
-    let classes = this.state.popup === true ? "popup active" : "popup";
+    let classes = this.state.popup1 === true ? "popup active" : "popup";
+    return classes;
+  }
+  getDeleteClasses() {
+    let classes = this.state.popup2 === true ? "popup active " : "popup";
     return classes;
   }
 }
