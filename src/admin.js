@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./admin.css";
 import axios from "axios";
 import config from "./config.json";
-import { reject } from "lodash";
 
 class Admin extends Component {
   state = { popup: false, participants: [], value: "" };
@@ -21,21 +20,29 @@ class Admin extends Component {
       alert(error);
     }
   };
+  handleDelete = async (personId) => {
+    try {
+      await axios.delete(config.apiUrl + "/api/persons/" + personId);
+    } catch (error) {}
+  };
   handlePost = async () => {
     const obj = { name: this.state.value };
     console.log(obj, "post");
     this.setState({ popup: false });
     try {
       await axios.post(config.apiUrl + "/api/persons/newUser", obj);
+      this.setState({ value: "" });
     } catch (ex) {
       alert(ex);
     }
   };
   handleUpdate = async (participant) => {
     const p = new Promise((resolve, reject) => {
-      axios.patch(config.apiUrl + "/api/persons/" + participant.id, {
-        allowVotes: !participant.allowVotes,
-      });
+      resolve(
+        axios.patch(config.apiUrl + "/api/persons/" + participant.id, {
+          allowVotes: !participant.allowVotes,
+        })
+      );
     });
     p.then(() => {
       setTimeout(() => {
@@ -83,6 +90,14 @@ class Admin extends Component {
                     </button>
                   </div>
                 </div>
+                <div className="button-container">
+                  <button
+                    className="deleteButton"
+                    onClick={() => this.handleDelete(participant.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -92,7 +107,7 @@ class Admin extends Component {
               value={this.state.value}
               onChange={this.handleChange}
             />
-            <button className="submit" onClick={this.handlePost}>
+            <button className="submit" onClick={() => this.handlePost()}>
               Submit
             </button>
           </div>
@@ -101,7 +116,6 @@ class Admin extends Component {
     );
   }
   getBadgeClasses() {
-    console.log(this.state.popup);
     let classes = this.state.popup === true ? "popup active" : "popup";
     return classes;
   }

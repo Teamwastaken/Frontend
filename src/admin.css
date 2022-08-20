@@ -42,6 +42,14 @@ button:hover {
 .red {
   background: red;
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+.deleteButton {
+  background: red;
+  padding: 10px;
+}
 
 .popup {
   display: grid;
