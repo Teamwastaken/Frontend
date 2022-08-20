@@ -1,0 +1,13 @@
+.ranking {
+  margin-left: 70px;
+  margin-top: 50px;
+}
+
+.participant {
+  font-size: 25px;
+}
+
+.ranking_box {
+  height: 700px;
+  box-shadow: 3px 4px 8px 2px rgba(0, 0, 0, 0.67);
+}
