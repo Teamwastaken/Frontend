@@ -1,15 +1,15 @@
 import "./css/home.css";
 const Home = () => {
   return (
-    <header className="header">
-      <div>
-        <a href="/ranking" className="homelink1 link">
-          Ranking
-        </a>
-        <div></div>
-        <a href="/voting/1/nolocalstorage" className="homelink2 link">
+    <header className="body">
+      <h1 className="heading">Voice of SSG</h1>
+      <div className="links">
+        <button href="/voting/1/nolocalstorage" className="link orange">
           Voting
-        </a>
+        </button>
+        <button href="/ranking" className="link blue">
+          Ranking
+        </button>
       </div>
     </header>
   );
