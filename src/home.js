@@ -1,10 +1,14 @@
+import "./home.css"
 const Home = () => {
   return (
-    <div>
-      <a href="/ranking">ranking</a>
-      <div></div>
-      <a href="/voting/1">voting</a>
-    </div>
+    <header className="header">
+      <div>
+         <a href="/ranking" className="homelink1">Ranking</a>
+         <div></div>
+         <a href="/voting/1/nolocalstorage" className="homelink2">Voting</a>
+      </div>
+  </header>
+  
   );
 };
 
