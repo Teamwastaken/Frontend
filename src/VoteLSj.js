@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import "./css/voteLSj.css";
 import VotingFunction from "./utils/voting";
+import "./css/voteLSj.css";
 
 function VoteWrapperLs() {
   let params = useParams();
@@ -18,7 +18,7 @@ class Vote extends VotingFunction {
       return <h1>Person could not be found.</h1>;
 
     return (
-      <div>
+      <div className="body">
         <div className="buttondiv">
           <button onClick={() => this.handlePost(1, false)} className="b1">
             1

@@ -52,11 +52,7 @@ class Admin extends Component {
         })
       );
     });
-    p.then(() => {
-      setTimeout(() => {
-        this.getParticipants();
-      }, 1000);
-    });
+    p.then(() => this.getParticipants());
   };
   handleChange = (event) => {
     this.setState({ value: event.target.value });
@@ -80,11 +76,11 @@ class Admin extends Component {
   render() {
     const ordered = _.orderBy(this.state.participants, "id", "asc");
     return (
-      <div>
+      <div className="body">
         <header>
           <h1>Dashboard</h1>
           <button
-            className="element"
+            className="button button-hover element"
             onClick={() => this.setState({ popup1: true })}
           >
             New User
@@ -105,14 +101,16 @@ class Admin extends Component {
                   {" "}
                   <div className="box-seperate">
                     {" "}
-                    <div className="element">{participant.rank}</div>
+                    <div className="element">{participant.rank}.</div>
                     <div className="element">{participant.score}</div>
                   </div>
                   <div className="box-seperate">
                     <div className="element"> {participant.name}</div>
                     <button
                       className={
-                        participant.allowVotes ? "element" : "element red"
+                        participant.allowVotes
+                          ? "button button-hover element allow"
+                          : "button element allow orange"
                       }
                       onClick={() => this.handleUpdate(participant)}
                     >

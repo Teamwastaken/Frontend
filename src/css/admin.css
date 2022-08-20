@@ -1,8 +1,14 @@
 * {
   font-size: 20px;
+  color: white;
+}
+.body {
+  background-color: black;
 }
 header {
   margin: 10px;
+  margin-top: 0;
+  padding-top: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -10,6 +16,17 @@ header {
   display: grid;
   width: fit-content;
   grid-template-columns: auto auto auto;
+  margin: auto;
+}
+
+.box {
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  background: #202224;
+}
+.allow {
+  width: 100px;
 }
 @media screen and (min-width: 300px) {
   .boxes {
@@ -46,14 +63,6 @@ header {
     grid-template-columns: auto auto auto auto auto auto auto;
   }
 }
-
-.box {
-  border-radius: 20px;
-  padding: 20px;
-  margin: 20px;
-  width: fit-content;
-  background: #e7e9eb;
-}
 .elementWrapper {
   display: flex;
 }
@@ -66,17 +75,19 @@ header {
 .id {
   text-align: center;
 }
-button {
+.button {
   border: none;
-
   border-radius: 8px;
   background: #04aa6d;
 }
-button:hover {
+.button-hover:hover {
   background: #059862;
 }
-.red {
-  background: red;
+.orange {
+  background: rgb(198, 114, 17);
+}
+.orange:hover {
+  background: rgb(146, 80, 4);
 }
 .button-container {
   display: flex;

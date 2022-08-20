@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Component } from "react";
 import config from "../config/config.json";
-import "../css/voteLSj.css";
 
 class VotingFunction extends Component {
   state = {
