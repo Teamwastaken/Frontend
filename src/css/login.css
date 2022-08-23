@@ -1,0 +1,23 @@
+.inputs {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+.list-item {
+  display: flex;
+  justify-content: center;
+}
+.blue {
+  background-color: #0071e3;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.blue:hover {
+  background-color: #0077ed;
+}
+.input-field {
+  padding: 15px 20px;
+  border-radius: 20px;
+  color: black;
+}

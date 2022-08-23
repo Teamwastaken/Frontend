@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import VotingFunction from "./utils/voting";
+import VotingFunction from "./components/voting";
 import "./css/voteLSj.css";
 
 function VoteWrapper() {
