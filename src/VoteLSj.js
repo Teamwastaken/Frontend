@@ -39,10 +39,6 @@ class Vote extends VotingFunction {
             6
           </button>
         </div>
-        <h1 className="score">Score: {this.state.participant.score}</h1>
-        <button onClick={() => this.loadParticipant()} className="update_score">
-          Update Score
-        </button>
       </div>
     );
   }

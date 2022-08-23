@@ -1,27 +1,18 @@
 import React, { Component } from "react";
 import "../css/login.css";
-import axios from "axios";
-import config from "../config/config.json";
+import { login } from "../services/authService";
 
 class LoginForm extends Component {
   state = {
     data: { username: "", password: "" },
   };
-  componentDidMount() {}
-  handlePost = async () => {
-    const obj = {
-      email: this.state.data.username,
-      password: this.state.data.password,
-    };
 
-    try {
-      const { data: jwt } = await axios.post(config.apiUrl + "/api/auth", obj);
-      localStorage.setItem("token", jwt);
-    } catch (ex) {
-      alert(ex);
-    }
+  handlePost = async () => {
+    const { data } = this.state;
+    const { data: jwt } = await login(data.username, data.password);
+    localStorage.setItem("token", jwt);
   };
-  doSubmit = (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
   };
   handleChange1 = (event) => {

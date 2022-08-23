@@ -18,8 +18,14 @@ class Admin extends Component {
   }
   getParticipants = async () => {
     try {
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
       const { data: participants } = await axios.get(
-        config.apiUrl + "/api/persons"
+        config.apiUrl + "/api/persons",
+        {
+          headers: headers,
+        }
       );
       this.setState({ participants });
       this.forceUpdate();
@@ -28,28 +34,49 @@ class Admin extends Component {
     }
   };
   handleDelete = async () => {
+    const headers = {
+      "x-auth-token": await localStorage.getItem("token"),
+    };
     try {
-      await axios.delete(config.apiUrl + "/api/persons/" + this.state.deleteId);
-      console.log(this.state.deleteId);
+      await axios.delete(
+        config.apiUrl + "/api/persons/" + this.state.deleteId,
+        {
+          headers: headers,
+        }
+      );
     } catch (error) {}
   };
   handlePost = async () => {
     const obj = { name: this.state.value };
-    console.log(obj, "post");
     this.setState({ popup: false });
     try {
-      await axios.post(config.apiUrl + "/api/persons/newUser", obj);
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
+      await axios.post(config.apiUrl + "/api/persons/newUser", obj, {
+        headers: headers,
+      });
+
       this.setState({ value: "" });
     } catch (ex) {
       alert(ex);
     }
   };
   handleUpdate = async (participant) => {
+    const headers = {
+      "x-auth-token": await localStorage.getItem("token"),
+    };
     const p = new Promise((resolve, reject) => {
       resolve(
-        axios.patch(config.apiUrl + "/api/persons/" + participant.id, {
-          allowVotes: !participant.allowVotes,
-        })
+        axios.patch(
+          config.apiUrl + "/api/persons/" + participant.id,
+          {
+            allowVotes: !participant.allowVotes,
+          },
+          {
+            headers: headers,
+          }
+        )
       );
     });
     p.then(() => this.getParticipants());
@@ -136,6 +163,7 @@ class Admin extends Component {
             className={this.getBadgeClasses()}
           >
             <input
+              className="inputPopup"
               placeholder="Name"
               value={this.state.value}
               onChange={this.handleChange}

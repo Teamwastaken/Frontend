@@ -1,6 +1,6 @@
-import http from "../services/httpService";
 import { Component } from "react";
 import config from "../config/config.json";
+import axios from "axios";
 
 class VotingFunction extends Component {
   state = {
@@ -13,7 +13,7 @@ class VotingFunction extends Component {
     if (localStorageBool)
       localStorage.setItem("voted" + id, JSON.stringify(voted));
     try {
-      await http.post(config.apiUrl + "/api/persons/", obj);
+      await axios.post(config.apiUrl + "/api/persons/", obj);
       this.forceUpdate();
     } catch (error) {
       if (error.response.data.message === "Votes arent allowed.") {
@@ -27,7 +27,7 @@ class VotingFunction extends Component {
   };
   loadParticipant = async () => {
     try {
-      const { data: participant } = await http.get(
+      const { data: participant } = await axios.get(
         config.apiUrl + "/api/persons/" + this.props.id
       );
       this.setState({ participant });

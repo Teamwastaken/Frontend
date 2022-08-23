@@ -9,14 +9,24 @@ class Ranking extends Component {
 
   async componentDidMount() {
     //get data for participants
-    const { data: participants } = await axios.get(
-      config.apiUrl + "/api/persons"
-    );
-    this.setState({ participants });
+    try {
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
+      const { data: participants } = await axios.get(
+        config.apiUrl + "/api/persons",
+        { headers: headers }
+      );
+
+      this.setState({ participants });
+    } catch (error) {
+      console.log(ex.message);
+    }
   }
 
   render() {
     //sort it
+    // if (this.state.participants.length === 0) return "No access";
     const ordered = _.orderBy(this.state.participants, "score", "desc");
     return (
       <header className="ranking_box">

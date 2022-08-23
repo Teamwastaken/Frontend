@@ -21,7 +21,6 @@ class Vote extends VotingFunction {
       return (
         <div className="body">
           <h1 className="buttondiv">Already Voted</h1>
-          <h2 className="buttondiv">Score: {this.state.participant.score}</h2>
         </div>
       );
     if (this.state.participant.length === 0)
@@ -59,10 +58,6 @@ class Vote extends VotingFunction {
             6
           </button>
         </div>
-        <h1 className="score">Score: {this.state.participant.score}</h1>
-        <button onClick={() => this.loadParticipant()} className="update_score">
-          Update Score
-        </button>
       </div>
     );
   }
