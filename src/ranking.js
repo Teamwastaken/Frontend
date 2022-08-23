@@ -19,8 +19,10 @@ class Ranking extends Component {
       );
 
       this.setState({ participants });
-    } catch (error) {
-      console.log(error.message);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
     }
   }
 

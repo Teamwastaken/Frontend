@@ -8,13 +8,15 @@ class RegisterForm extends Component {
   };
 
   handlePost = async () => {
-    const { data } = this.state;
-    const { data: jwt } = await register(
-      data.name,
-      data.username,
-      data.password
-    );
-    localStorage.setItem("token", jwt);
+    try {
+      const { data } = this.state;
+      const response = await register(data.name, data.username, data.password);
+      localStorage.setItem("token", response.headers["x-auth-token"]);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
   };
   handleSubmit = (event) => {
     event.preventDefault();
