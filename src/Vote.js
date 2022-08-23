@@ -43,19 +43,19 @@ class Vote extends VotingFunction {
           <button onClick={() => this.handlePost(1, false)} className="b1">
             1
           </button>
-          <button onClick={() => this.handlePost(2, false)} className="b1">
+          <button onClick={() => this.handlePost(2, true)} className="b1">
             2
           </button>
-          <button onClick={() => this.handlePost(3, false)} className="b1">
+          <button onClick={() => this.handlePost(3, true)} className="b1">
             3
           </button>
-          <button onClick={() => this.handlePost(4, false)} className="b1">
+          <button onClick={() => this.handlePost(4, true)} className="b1">
             4
           </button>
-          <button onClick={() => this.handlePost(5, false)} className="b1">
+          <button onClick={() => this.handlePost(5, true)} className="b1">
             5
           </button>
-          <button onClick={() => this.handlePost(6, false)} className="b1">
+          <button onClick={() => this.handlePost(6, true)} className="b1">
             6
           </button>
         </div>
