@@ -8,6 +8,7 @@ import VoteWrapper from "./Vote";
 import VoteWrapperLs from "./VoteLSj";
 import Admin from "./admin";
 import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +20,7 @@ root.render(
       <Route path="/voting/:id/noLocalStorage" element={<VoteWrapperLs />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/register" element={<RegisterForm />} />
     </Routes>
   </BrowserRouter>
 );
