@@ -20,7 +20,7 @@ class Ranking extends Component {
 
       this.setState({ participants });
     } catch (error) {
-      console.log(ex.message);
+      console.log(error.message);
     }
   }
 
