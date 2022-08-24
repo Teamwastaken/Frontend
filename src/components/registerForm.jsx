@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "../css/login.css";
 import { register } from "./../services/registerService";
+import { Navigate } from "react-router-dom";
 
 class RegisterForm extends Component {
   state = {
+    redirect: false,
     data: { name: "", username: "", password: "" },
+    errors: { username: "", name: "" },
   };
 
   handlePost = async () => {
@@ -12,14 +15,21 @@ class RegisterForm extends Component {
       const { data } = this.state;
       const response = await register(data.name, data.username, data.password);
       localStorage.setItem("token", response.headers["x-auth-token"]);
+      const errors = { ...this.state.errors };
+      errors.username = "";
+      this.setState({ errors });
+      this.setState({ redirect: !this.state.redirect });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
       }
     }
   };
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
+    await this.handlePost();
   };
   handleChange1 = (event) => {
     const data = { ...this.state.data };
@@ -28,7 +38,7 @@ class RegisterForm extends Component {
   };
   handleChange2 = (event) => {
     const data = { ...this.state.data };
-    data.username = event.target.value;
+    data.username = event.target.value.toLowerCase();
     this.setState({ data });
   };
   handleChange3 = (event) => {
@@ -52,6 +62,9 @@ class RegisterForm extends Component {
               />
             </li>
             <li className="list-item">
+              <label className="error label">{this.state.errors.name}</label>
+            </li>
+            <li className="list-item">
               <input
                 type="username"
                 placeholder="username"
@@ -59,6 +72,11 @@ class RegisterForm extends Component {
                 onChange={this.handleChange2}
                 value={this.state.data.username}
               />
+            </li>
+            <li className="list-item">
+              <label className="error label">
+                {this.state.errors.username}
+              </label>
             </li>
             <li className="list-item">
               <input
@@ -70,12 +88,9 @@ class RegisterForm extends Component {
               />
             </li>
             <li className="list-item">
-              <button
-                className="input blue"
-                type="submit"
-                onClick={() => this.handlePost()}
-              >
-                Login
+              <button className="input blue" type="submit">
+                {this.state.redirect && <Navigate to="/admin" replace={true} />}
+                Register
               </button>
             </li>
           </ul>

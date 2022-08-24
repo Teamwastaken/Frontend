@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "../css/login.css";
 import { login } from "../services/authService";
+import { Navigate } from "react-router-dom";
 
 class LoginForm extends Component {
   state = {
+    redirect: false,
     data: { username: "", password: "" },
+    errors: { username: "" },
   };
 
   handlePost = async () => {
@@ -12,18 +15,25 @@ class LoginForm extends Component {
       const { data } = this.state;
       const { data: jwt } = await login(data.username, data.password);
       localStorage.setItem("token", jwt);
+      const errors = { ...this.state.errors };
+      errors.username = "";
+      this.setState({ errors });
+      this.setState({ redirect: !this.state.redirect });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
       }
     }
   };
   handleSubmit = (event) => {
     event.preventDefault();
+    this.handlePost();
   };
   handleChange1 = (event) => {
     const data = { ...this.state.data };
-    data.username = event.target.value;
+    data.username = event.target.value.toLowerCase();
     this.setState({ data });
   };
   handleChange2 = (event) => {
@@ -47,6 +57,11 @@ class LoginForm extends Component {
               />
             </li>
             <li className="list-item">
+              <label className="error label">
+                {this.state.errors.username}
+              </label>
+            </li>
+            <li className="list-item">
               <input
                 className="input input-field"
                 type="password"
@@ -56,11 +71,8 @@ class LoginForm extends Component {
               />
             </li>
             <li className="list-item">
-              <button
-                className="input blue"
-                type="submit"
-                onClick={() => this.handlePost()}
-              >
+              <button className="input blue" type="submit">
+                {this.state.redirect && <Navigate to="/admin" replace={true} />}
                 Login
               </button>
             </li>

@@ -18,6 +18,16 @@
 }
 .input-field {
   padding: 15px 20px;
+  margin-bottom: 0;
   border-radius: 20px;
   color: black;
+}
+.list-item {
+  margin: 0;
+  padding: 0;
+}
+.label {
+  margin: 0;
+  color: red;
+  background-color: rgb(0, 0, 0);
 }

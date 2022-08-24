@@ -15,10 +15,10 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/ranking" element={<Ranking />} />
       <Route path="/voting/:id" element={<VoteWrapper />} />
       <Route path="/voting/:id/noLocalStorage" element={<VoteWrapperLs />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/ranking" element={<Ranking />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
     </Routes>
