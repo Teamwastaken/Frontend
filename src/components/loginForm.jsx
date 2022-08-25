@@ -28,7 +28,9 @@ class LoginForm extends Form {
       }
     }
   };
-
+  doSubmit = () => {
+    this.handlePost();
+  };
   render() {
     return (
       <div className="body">
@@ -36,29 +38,11 @@ class LoginForm extends Form {
         <form className="inputs" onSubmit={this.handleSubmit}>
           <ul>
             <li className="list-item">
-              <input
-                name="username"
-                type="username"
-                placeholder="username"
-                className="input input-field"
-                onChange={this.handleChange}
-                value={this.state.data.username}
-              />
+              {this.renderInput("username", "Username")}
             </li>
+
             <li className="list-item">
-              <label className="error label">
-                {this.state.errors.username}
-              </label>
-            </li>
-            <li className="list-item">
-              <input
-                name="password"
-                className="input input-field"
-                type="password"
-                placeholder="password"
-                onChange={this.handleChange}
-                value={this.state.data.password}
-              />
+              {this.renderInput("password", "Password", "password")}
             </li>
             <li className="list-item">
               <button className="input blue" type="submit">

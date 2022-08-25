@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "../css/login.css";
 import { register } from "./../services/registerService";
 import { Navigate } from "react-router-dom";
@@ -28,50 +28,26 @@ class RegisterForm extends Form {
       }
     }
   };
-
+  doSubmit = () => {
+    this.handlePost();
+  };
   render() {
     return (
       <div className="body">
         <h1 className="heading">Register</h1>
         <form className="inputs" onSubmit={this.handleSubmit}>
           <ul>
-            <li className="list-item">
-              <input
-                name="name"
-                type="text"
-                placeholder="name"
-                className="input input-field"
-                onChange={this.handleChange}
-                value={this.state.data.name}
-              />
-            </li>
+            <li className="list-item">{this.renderInput("name", "Name")}</li>
+
             <li className="list-item">
               <label className="error label">{this.state.errors.name}</label>
             </li>
             <li className="list-item">
-              <input
-                name="username"
-                type="username"
-                placeholder="username"
-                className="input input-field"
-                onChange={this.handleChange}
-                value={this.state.data.username}
-              />
+              {this.renderInput("username", "Username")}
             </li>
+
             <li className="list-item">
-              <label className="error label">
-                {this.state.errors.username}
-              </label>
-            </li>
-            <li className="list-item">
-              <input
-                name="password"
-                className="input input-field"
-                type="password"
-                placeholder="password"
-                onChange={this.handleChange}
-                value={this.state.data.password}
-              />
+              {this.renderInput("password", "Password", "password")}
             </li>
             <li className="list-item">
               <button className="input blue" type="submit">

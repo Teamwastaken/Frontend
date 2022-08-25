@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Input from "./input";
 //import { Navigate } from "react-router-dom";
 
 class Form extends Component {
@@ -10,7 +11,8 @@ class Form extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.handlePost();
+    this.doSubmit();
+    this.setState({ popup1: false, popup2: false });
   };
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
@@ -21,6 +23,20 @@ class Form extends Component {
     }
     this.setState({ data });
   };
+
+  renderInput(name, label, type = "text") {
+    const { data, errors } = this.state;
+    return (
+      <Input
+        type={type}
+        name={name}
+        onChange={this.handleChange}
+        value={data[name]}
+        error={errors[name]}
+        label={label}
+      />
+    );
+  }
 }
 
 export default Form;

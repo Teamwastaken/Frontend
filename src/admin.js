@@ -1,16 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import "./css/admin.css";
 import axios from "axios";
 import config from "./config/config.json";
 import _ from "lodash";
+import Form from "./components/common/form";
 
-class Admin extends Component {
+class Admin extends Form {
   state = {
     popup1: false,
     popup2: false,
     deleteId: 0,
     participants: [],
     value: "",
+    errors: { access: "Acces denied", responseCode: null },
   };
   async componentDidMount() {
     this.getParticipants();
@@ -29,8 +31,13 @@ class Admin extends Component {
       );
       this.setState({ participants });
       this.forceUpdate();
-    } catch (error) {
-      alert(error);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 401) {
+        const errors = { ...this.state.errors };
+        errors.access = ex.response.data;
+        errors.responseCode = ex.response.status;
+        this.setState({ errors });
+      }
     }
   };
   handleDelete = async () => {
@@ -79,28 +86,34 @@ class Admin extends Component {
         )
       );
     });
-    p.then(() => this.getParticipants());
+    p.then(() => this.updateAllowVotes(participant));
+  };
+  updateAllowVotes = (participant) => {
+    const participants = [...this.state.participants];
+    const index = participants.findIndex((item) => item.id === participant.id);
+    participants[index].allowVotes = !participant.allowVotes;
+    this.setState({ participants });
   };
   handleChange = (event) => {
     this.setState({ value: event.target.value });
   };
-  handleSubmit1 = (event) => {
-    event.preventDefault();
-    this.setState({ popup1: false });
-    console.log("form submitted ✅");
-  };
-  handleSubmit2 = (event) => {
-    event.preventDefault();
-    this.setState({ popup2: false });
-    console.log("form submitted ✅");
-  };
+  doSubmit = () => {};
+
   escFunction = (event) => {
     if (event.key === "Escape") {
-      this.setState({ popup1: false });
-      this.setState({ popup2: false });
+      this.setState({ popup1: false, popup2: false });
     }
   };
   render() {
+    if (this.state.errors.responseCode === 401)
+      return (
+        <div className="body">
+          <header>
+            {" "}
+            <h1>Acces denied.</h1>
+          </header>
+        </div>
+      );
     const ordered = _.orderBy(this.state.participants, "id", "asc");
     return (
       <div className="body">
@@ -158,10 +171,7 @@ class Admin extends Component {
               </div>
             </div>
           ))}
-          <form
-            onSubmit={this.handleSubmit1}
-            className={this.getBadgeClasses()}
-          >
+          <form onSubmit={this.handleSubmit} className={this.getBadgeClasses()}>
             <input
               className="inputPopup"
               placeholder="Name"
@@ -177,7 +187,7 @@ class Admin extends Component {
             </button>
           </form>
           <form
-            onSubmit={this.handleSubmit2}
+            onSubmit={this.handleSubmit}
             className={this.getDeleteClasses()}
           >
             <p>Sure you want to delete this user?</p>
