@@ -16,7 +16,7 @@ class Form extends Component {
   };
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
-    if (input.name === "password") {
+    if (input.name === "password" || input.name === "name") {
       data[input.name] = input.value;
     } else {
       data[input.name] = input.value.toLowerCase();

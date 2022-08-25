@@ -8,12 +8,12 @@ class VotingFunction extends Component {
   };
   handlePost = async (points, localStorageBool) => {
     const { id } = this.props;
-    const obj = { person: id, score: points };
+    const obj = { score: points };
     const voted = { person: id, voted: true };
     if (localStorageBool)
       localStorage.setItem("voted" + id, JSON.stringify(voted));
     try {
-      await axios.post(config.apiUrl + "/api/persons/", obj);
+      await axios.post(config.apiUrl + "/api/persons/" + id, obj);
       this.forceUpdate();
     } catch (error) {
       if (error.response.data.message === "Votes arent allowed.") {

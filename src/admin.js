@@ -9,7 +9,7 @@ class Admin extends Form {
   state = {
     popup1: false,
     popup2: false,
-    deleteId: 0,
+    deleteId: "",
     participants: [],
     value: "",
     errors: { access: "Acces denied", responseCode: null },
@@ -54,6 +54,7 @@ class Admin extends Form {
     } catch (error) {}
   };
   handlePost = async () => {
+    console.log("handle Post", this.state.value);
     const obj = { name: this.state.value };
     this.setState({ popup: false });
     try {
@@ -76,7 +77,7 @@ class Admin extends Form {
     const p = new Promise((resolve, reject) => {
       resolve(
         axios.patch(
-          config.apiUrl + "/api/persons/" + participant.id,
+          config.apiUrl + "/api/persons/" + participant._id,
           {
             allowVotes: !participant.allowVotes,
           },
@@ -90,7 +91,9 @@ class Admin extends Form {
   };
   updateAllowVotes = (participant) => {
     const participants = [...this.state.participants];
-    const index = participants.findIndex((item) => item.id === participant.id);
+    const index = participants.findIndex(
+      (item) => item._id === participant._id
+    );
     participants[index].allowVotes = !participant.allowVotes;
     this.setState({ participants });
   };
@@ -114,7 +117,7 @@ class Admin extends Form {
           </header>
         </div>
       );
-    const ordered = _.orderBy(this.state.participants, "id", "asc");
+    const ordered = _.orderBy(this.state.participants, "_id", "asc");
     return (
       <div className="body">
         <header>
@@ -131,11 +134,11 @@ class Admin extends Form {
             <div key={participant._id}>
               <div className="box">
                 <a
-                  href={"voting/" + participant.id + "/noLocalstorage"}
+                  href={"voting/" + participant._id + "/noLocalstorage"}
                   target="_blanc"
                 >
                   {" "}
-                  <h1 className="id">#Id {participant.id}</h1>
+                  <h3 className="id">{participant._id}</h3>
                 </a>
                 <div className="elementWrapper">
                   {" "}
@@ -162,7 +165,7 @@ class Admin extends Form {
                   <button
                     className="deleteButton"
                     onClick={() =>
-                      this.setState({ popup2: true, deleteId: participant.id })
+                      this.setState({ popup2: true, deleteId: participant._id })
                     }
                   >
                     Delete
