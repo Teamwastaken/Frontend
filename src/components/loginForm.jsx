@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import "../css/login.css";
 import { login } from "../services/authService";
 import { Navigate } from "react-router-dom";
+import Form from "./common/form";
 
-class LoginForm extends Component {
+class LoginForm extends Form {
   state = {
     redirect: false,
     data: { username: "", password: "" },
@@ -27,20 +28,7 @@ class LoginForm extends Component {
       }
     }
   };
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.handlePost();
-  };
-  handleChange1 = (event) => {
-    const data = { ...this.state.data };
-    data.username = event.target.value.toLowerCase();
-    this.setState({ data });
-  };
-  handleChange2 = (event) => {
-    const data = { ...this.state.data };
-    data.password = event.target.value;
-    this.setState({ data });
-  };
+
   render() {
     return (
       <div className="body">
@@ -49,10 +37,11 @@ class LoginForm extends Component {
           <ul>
             <li className="list-item">
               <input
+                name="username"
                 type="username"
                 placeholder="username"
                 className="input input-field"
-                onChange={this.handleChange1}
+                onChange={this.handleChange}
                 value={this.state.data.username}
               />
             </li>
@@ -63,10 +52,11 @@ class LoginForm extends Component {
             </li>
             <li className="list-item">
               <input
+                name="password"
                 className="input input-field"
                 type="password"
                 placeholder="password"
-                onChange={this.handleChange2}
+                onChange={this.handleChange}
                 value={this.state.data.password}
               />
             </li>

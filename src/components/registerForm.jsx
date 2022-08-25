@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "../css/login.css";
 import { register } from "./../services/registerService";
 import { Navigate } from "react-router-dom";
+import Form from "./common/form";
 
-class RegisterForm extends Component {
+class RegisterForm extends Form {
   state = {
     redirect: false,
     data: { name: "", username: "", password: "" },
@@ -27,25 +28,7 @@ class RegisterForm extends Component {
       }
     }
   };
-  handleSubmit = async (event) => {
-    event.preventDefault();
-    await this.handlePost();
-  };
-  handleChange1 = (event) => {
-    const data = { ...this.state.data };
-    data.name = event.target.value;
-    this.setState({ data });
-  };
-  handleChange2 = (event) => {
-    const data = { ...this.state.data };
-    data.username = event.target.value.toLowerCase();
-    this.setState({ data });
-  };
-  handleChange3 = (event) => {
-    const data = { ...this.state.data };
-    data.password = event.target.value;
-    this.setState({ data });
-  };
+
   render() {
     return (
       <div className="body">
@@ -54,10 +37,11 @@ class RegisterForm extends Component {
           <ul>
             <li className="list-item">
               <input
+                name="name"
                 type="text"
                 placeholder="name"
                 className="input input-field"
-                onChange={this.handleChange1}
+                onChange={this.handleChange}
                 value={this.state.data.name}
               />
             </li>
@@ -66,10 +50,11 @@ class RegisterForm extends Component {
             </li>
             <li className="list-item">
               <input
+                name="username"
                 type="username"
                 placeholder="username"
                 className="input input-field"
-                onChange={this.handleChange2}
+                onChange={this.handleChange}
                 value={this.state.data.username}
               />
             </li>
@@ -80,10 +65,11 @@ class RegisterForm extends Component {
             </li>
             <li className="list-item">
               <input
+                name="password"
                 className="input input-field"
                 type="password"
                 placeholder="password"
-                onChange={this.handleChange3}
+                onChange={this.handleChange}
                 value={this.state.data.password}
               />
             </li>
