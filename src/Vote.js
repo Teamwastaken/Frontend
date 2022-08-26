@@ -15,6 +15,7 @@ class Vote extends VotingFunction {
 
   render() {
     const { id } = this.props;
+    console.log(`{"person":"${id}","voted":true}`);
     if (
       `{"person":"${id}","voted":true}` === localStorage.getItem(`voted${id}`)
     )

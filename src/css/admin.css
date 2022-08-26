@@ -100,8 +100,15 @@ header {
 .deleteButton {
   background: red;
   padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
 }
-
+.setButton {
+  background-color: #04aa6d;
+  padding-left: 25px;
+  padding-right: 25px;
+}
 .popup {
   visibility: hidden;
   position: fixed;

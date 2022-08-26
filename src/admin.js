@@ -13,10 +13,12 @@ class Admin extends Form {
     participants: [],
     value: "",
     errors: { access: "Acces denied", responseCode: null },
+    currentVotingName: "",
   };
   async componentDidMount() {
     this.getParticipants();
     document.addEventListener("keydown", this.escFunction, false);
+    this.getCurrenVoting();
   }
   getParticipants = async () => {
     try {
@@ -70,6 +72,31 @@ class Admin extends Form {
       alert(ex);
     }
   };
+  setCurrentVote = async (Id, name) => {
+    const obj = { currentVoting: Id };
+    this.setState({ currentVotingName: name });
+    try {
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
+      await axios.put(config.apiUrl + "/api/persons/currentVoting", obj, {
+        headers: headers,
+      });
+    } catch (ex) {
+      alert(ex);
+    }
+  };
+  getCurrenVoting = async () => {
+    try {
+      const { data: participant } = await axios.get(
+        config.apiUrl + "/api/persons/currentVoting"
+      );
+      this.setState({ currentVotingName: participant.name });
+    } catch (ex) {
+      alert(ex);
+    }
+  };
+
   handleUpdate = async (participant) => {
     const headers = {
       "x-auth-token": await localStorage.getItem("token"),
@@ -122,6 +149,7 @@ class Admin extends Form {
       <div className="body">
         <header>
           <h1>Dashboard</h1>
+          <h2>CurrentVoting: {this.state.currentVotingName}</h2>
           <button
             className="button button-hover element"
             onClick={() => this.setState({ popup1: true })}
@@ -162,6 +190,14 @@ class Admin extends Form {
                   </div>
                 </div>
                 <div className="button-container">
+                  <button
+                    className="setButton deleteButton"
+                    onClick={() =>
+                      this.setCurrentVote(participant._id, participant.name)
+                    }
+                  >
+                    Set
+                  </button>
                   <button
                     className="deleteButton"
                     onClick={() =>
