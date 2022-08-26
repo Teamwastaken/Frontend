@@ -151,7 +151,7 @@ class Admin extends Form {
           <h1>Dashboard</h1>
           <h2>CurrentVoting: {this.state.currentVotingName}</h2>
           <button
-            className="button button-hover element"
+            className="button button-hover element newUser"
             onClick={() => this.setState({ popup1: true })}
           >
             New User
@@ -159,54 +159,52 @@ class Admin extends Form {
         </header>
         <div className="boxes">
           {ordered.map((participant) => (
-            <div key={participant._id}>
-              <div className="box">
-                <a
-                  href={"voting/" + participant._id + "/noLocalstorage"}
-                  target="_blanc"
+            <div className="box" key={participant._id}>
+              <a
+                href={"voting/" + participant._id + "/noLocalstorage"}
+                target="_blanc"
+              >
+                {" "}
+                <h3 className="id">{participant._id}</h3>
+              </a>
+              <div className="elementWrapper">
+                {" "}
+                <div className="box-seperate">
+                  {" "}
+                  <div className="element">{participant.rank}.</div>
+                  <div className="element">{participant.score}</div>
+                </div>
+                <div className="box-seperate">
+                  <div className="element name"> {participant.name}</div>
+                  <button
+                    className={
+                      participant.allowVotes
+                        ? "button button-hover element allow"
+                        : "button element allow orange"
+                    }
+                    onClick={() => this.handleUpdate(participant)}
+                  >
+                    {participant.allowVotes ? "enabled" : "disabled"}
+                  </button>
+                </div>
+              </div>
+              <div className="button-container">
+                <button
+                  className="setButton deleteButton"
+                  onClick={() =>
+                    this.setCurrentVote(participant._id, participant.name)
+                  }
                 >
-                  {" "}
-                  <h3 className="id">{participant._id}</h3>
-                </a>
-                <div className="elementWrapper">
-                  {" "}
-                  <div className="box-seperate">
-                    {" "}
-                    <div className="element">{participant.rank}.</div>
-                    <div className="element">{participant.score}</div>
-                  </div>
-                  <div className="box-seperate">
-                    <div className="element"> {participant.name}</div>
-                    <button
-                      className={
-                        participant.allowVotes
-                          ? "button button-hover element allow"
-                          : "button element allow orange"
-                      }
-                      onClick={() => this.handleUpdate(participant)}
-                    >
-                      {participant.allowVotes ? "enabled" : "disabled"}
-                    </button>
-                  </div>
-                </div>
-                <div className="button-container">
-                  <button
-                    className="setButton deleteButton"
-                    onClick={() =>
-                      this.setCurrentVote(participant._id, participant.name)
-                    }
-                  >
-                    Set
-                  </button>
-                  <button
-                    className="deleteButton"
-                    onClick={() =>
-                      this.setState({ popup2: true, deleteId: participant._id })
-                    }
-                  >
-                    Delete
-                  </button>
-                </div>
+                  Set
+                </button>
+                <button
+                  className="deleteButton"
+                  onClick={() =>
+                    this.setState({ popup2: true, deleteId: participant._id })
+                  }
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
