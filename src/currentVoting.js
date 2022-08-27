@@ -53,7 +53,7 @@ class CurrentVoting extends VotingFunction {
         </div>
       );
     if (this.state.participant.length === 0)
-      return <h1>Person could not be found.</h1>;
+      return <h1 className="body">Person could not be found.</h1>;
     if (this.state.participant.allowVotes === false) {
       console.log("Check votes allowed");
       return (
@@ -68,7 +68,7 @@ class CurrentVoting extends VotingFunction {
     return (
       <div className="body">
         <div className="buttondiv">
-          <button onClick={() => this.handlePost(1, false)} className="b1">
+          <button onClick={() => this.handlePost(1, true)} className="b1">
             1
           </button>
           <button onClick={() => this.handlePost(2, true)} className="b1">
