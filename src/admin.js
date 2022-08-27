@@ -82,6 +82,7 @@ class Admin extends Form {
       await axios.put(config.apiUrl + "/api/persons/currentVoting", obj, {
         headers: headers,
       });
+      this.forceUpdate();
     } catch (ex) {
       alert(ex);
     }
