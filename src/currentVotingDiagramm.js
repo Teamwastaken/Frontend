@@ -49,7 +49,7 @@ class CurrentVotingDiagram extends Form {
 
   render() {
     return (
-      <div className="body">
+      <div className="body ">
         <div className="bar-container">
           {" "}
           <div className="border">
