@@ -69,22 +69,22 @@ class CurrentVoting extends VotingFunction {
       <div className="body">
         <div className="buttondiv">
           <button onClick={() => this.handlePost(1, true)} className="b1">
-            1
+            1 Punkt
           </button>
           <button onClick={() => this.handlePost(2, true)} className="b1">
-            2
+            2 Punkte
           </button>
           <button onClick={() => this.handlePost(3, true)} className="b1">
-            3
+            3 Punkte
           </button>
           <button onClick={() => this.handlePost(4, true)} className="b1">
-            4
+            4 Punkte
           </button>
           <button onClick={() => this.handlePost(5, true)} className="b1">
-            5
+            5 Punkte
           </button>
           <button onClick={() => this.handlePost(6, true)} className="b1">
-            6
+            6 Punkte
           </button>
         </div>
       </div>

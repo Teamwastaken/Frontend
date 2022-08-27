@@ -5,15 +5,11 @@ import Form from "./components/common/form";
 
 class CurrentVotingDiagram extends Form {
   state = {
-    popup1: false,
-    popup2: false,
-    deleteId: "",
-    participants: [],
-    value: "",
     errors: { access: "Acces denied", responseCode: null },
     currentVotingName: "",
     currentVotingScore: 0,
     barWidth: null,
+    qualificationScore: 1200,
   };
   componentDidMount() {
     this.interval = setInterval(() => this.getCurrenVoting(), 1000);
@@ -32,7 +28,6 @@ class CurrentVotingDiagram extends Form {
       );
       this.setState(
         {
-          currentVotingName: participant.name,
           currentVotingScore: participant.score,
         },
         () => {
@@ -55,9 +50,13 @@ class CurrentVotingDiagram extends Form {
           <div className="border">
             {" "}
             <div
-              className="bar"
+              className="bar "
               style={{ width: `${this.state.barWidth}%`, maxWidth: "100%" }}
-            />
+            >
+              <div className="percentage">
+                Punkte: {this.state.currentVotingScore}{" "}
+              </div>
+            </div>
           </div>
         </div>
       </div>

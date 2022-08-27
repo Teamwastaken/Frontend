@@ -14,4 +14,11 @@
 .bar {
   background-color: rgb(46, 196, 182);
   min-height: 50px;
+  display: flex;
+  justify-content: center;
+}
+.percentage {
+  padding-top: 10px;
+  left: 45%;
+  position: fixed;
 }
