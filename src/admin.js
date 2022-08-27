@@ -15,7 +15,7 @@ class Admin extends Form {
     errors: { access: "Acces denied", responseCode: null },
     currentVotingName: "",
   };
-  async componentDidMount() {
+  componentDidMount() {
     this.getParticipants();
     document.addEventListener("keydown", this.escFunction, false);
     this.getCurrenVoting();
@@ -89,8 +89,14 @@ class Admin extends Form {
   };
   getCurrenVoting = async () => {
     try {
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
       const { data: participant } = await axios.get(
-        config.apiUrl + "/api/persons/currentVoting"
+        config.apiUrl + "/api/persons/currentVoting/admin",
+        {
+          headers: headers,
+        }
       );
       this.setState({ currentVotingName: participant.name });
     } catch (ex) {
