@@ -32,6 +32,11 @@
   background-color: rgb(0, 0, 0);
 }
 
-.header {
-  margin-top: 0;
+.heading {
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  color: rgb(30, 30, 30);
 }
