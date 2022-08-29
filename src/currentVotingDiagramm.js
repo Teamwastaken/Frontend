@@ -54,7 +54,10 @@ class CurrentVotingDiagram extends Form {
               style={{ width: `${this.state.barWidth}%`, maxWidth: "100%" }}
             >
               <div className="percentage">
-                Punkte: {this.state.currentVotingScore}{" "}
+                Punkte:{" "}
+                {this.state.currentVotingScore <= 1200
+                  ? this.state.currentVotingScore
+                  : 1200}{" "}
               </div>
             </div>
           </div>
