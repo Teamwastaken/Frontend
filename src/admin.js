@@ -20,6 +20,7 @@ class Admin extends Form {
     document.addEventListener("keydown", this.escFunction, false);
     this.getCurrenVoting();
   }
+  doSubmit = () => {};
   getParticipants = async () => {
     try {
       const headers = {
