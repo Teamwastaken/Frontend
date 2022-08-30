@@ -31,20 +31,20 @@ class Ranking extends Component {
     // if (this.state.participants.length === 0) return "No access";
     const ordered = _.orderBy(this.state.participants, "score", "desc");
     return (
-      <header className="ranking_box">
-        <div className="ranking">
+      <section className="body">
+        <header>
+          <h1 className="heading">Ranking</h1>
+        </header>
+        <body className="items">
           {ordered.map((participant) => (
-            <div key={participant._id} className="participant">
+            <div key={participant._id} className="item">
               {" "}
-              {participant.rank +
-                ". " +
-                participant.name +
-                "   " +
-                participant.score}
+              {participant.rank + ". " + participant.name}
+              <div className="">{participant.score} Punkte</div>
             </div>
           ))}
-        </div>
-      </header>
+        </body>
+      </section>
     );
   }
 }

@@ -1,16 +1,7 @@
-.ranking {
-  margin-left: 70px;
-  margin-top: 50px;
+.items {
+  padding: 30px;
 }
-
-.participant {
-  font-size: 25px;
-}
-
-.ranking_box {
-  padding: 0;
-  margin: 0;
-  width: 100vw;
-  min-height: 100vh;
-  background-color: black;
+.item {
+  display: flex;
+  justify-content: space-between;
 }

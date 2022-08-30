@@ -14,11 +14,14 @@
 }
 .label {
 }
-.input-container,
-.button-container {
+.input-container {
   width: 50%;
-  max-width: 450px;
+  max-width: 350px;
   margin: auto;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
 }
 .form-items {
   width: 100%;
@@ -38,7 +41,10 @@
   outline: none;
 }
 .button {
-  padding: 15px 30px;
+  margin-top: 20px;
+  width: 110px;
+  padding: 10px 0;
+  border-radius: 10px;
 }
 .blue {
   background-color: #0071e3;
@@ -50,7 +56,11 @@
 @media screen and (max-width: 600px) {
   .input-container,
   .button-container {
-    max-width: 80%;
+    width: 90%;
     margin: auto;
   }
+}
+.reset-margin {
+  margin: 0;
+  margin-top: 0;
 }

@@ -69,7 +69,8 @@ class Admin extends Form {
 
       this.setState({ value: "" });
     } catch (ex) {
-      alert(ex);
+      console.log(ex.response.data);
+      alert(ex.response.data);
     }
   };
   setCurrentVote = async (Id, name) => {
@@ -134,7 +135,6 @@ class Admin extends Form {
   handleChange = (event) => {
     this.setState({ value: event.target.value });
   };
-  doSubmit = () => {};
 
   escFunction = (event) => {
     if (event.key === "Escape") {
@@ -154,17 +154,19 @@ class Admin extends Form {
     const ordered = _.orderBy(this.state.participants, "_id", "asc");
     return (
       <div className="body">
-        <header>
-          <h1>Dashboard</h1>
-          <h2>CurrentVoting: {this.state.currentVotingName}</h2>
+        <header className="navbar">
+          <h1 className="nav-element">Dashboard</h1>
+          <h2 className="nav-element">
+            CurrentVoting: {this.state.currentVotingName}
+          </h2>
           <button
-            className="button button-hover element newUser"
+            className="nav-element green button-newUser"
             onClick={() => this.setState({ popup1: true })}
           >
             New User
           </button>
         </header>
-        <div className="boxes">
+        <div className="boxes-container">
           {ordered.map((participant) => (
             <div className="box" key={participant._id}>
               <a
@@ -172,22 +174,22 @@ class Admin extends Form {
                 target="_blanc"
               >
                 {" "}
-                <h3 className="id">{participant._id}</h3>
+                <h3 className="center">{participant._id}</h3>
               </a>
               <div className="elementWrapper">
                 {" "}
-                <div className="box-seperate">
+                <div className="">
                   {" "}
-                  <div className="element">{participant.rank}.</div>
-                  <div className="element">{participant.score}</div>
+                  <div className="box-element">{participant.rank}.</div>
+                  <div className="box-element">{participant.score}</div>
                 </div>
-                <div className="box-seperate">
-                  <div className="element name"> {participant.name}</div>
+                <div className="">
+                  <div className="name box-element"> {participant.name}</div>
                   <button
                     className={
                       participant.allowVotes
-                        ? "button button-hover element allow"
-                        : "button element allow orange"
+                        ? "reset-margin button green box-element"
+                        : "reset-margin button orange box-element"
                     }
                     onClick={() => this.handleUpdate(participant)}
                   >
@@ -197,7 +199,7 @@ class Admin extends Form {
               </div>
               <div className="button-container">
                 <button
-                  className="setButton deleteButton"
+                  className="button setButton orange"
                   onClick={() =>
                     this.setCurrentVote(participant._id, participant.name)
                   }
@@ -205,7 +207,7 @@ class Admin extends Form {
                   Set
                 </button>
                 <button
-                  className="deleteButton"
+                  className="button red deleteButton"
                   onClick={() =>
                     this.setState({ popup2: true, deleteId: participant._id })
                   }
@@ -217,13 +219,13 @@ class Admin extends Form {
           ))}
           <form onSubmit={this.handleSubmit} className={this.getBadgeClasses()}>
             <input
-              className="inputPopup"
+              className="input-popup m-auto m-10"
               placeholder="Name"
               value={this.state.value}
               onChange={this.handleChange}
             />
             <button
-              className="submit"
+              className="green button m-auto m-10"
               type="submit"
               onClick={() => this.handlePost()}
             >
@@ -234,10 +236,10 @@ class Admin extends Form {
             onSubmit={this.handleSubmit}
             className={this.getDeleteClasses()}
           >
-            <p>Sure you want to delete this user?</p>
+            <p className="center">Sure you want to delete this user?</p>
             <div className="button-container">
               <button
-                className="deleteButton"
+                className="red button reset-margin"
                 type="submit"
                 onClick={() => this.handleDelete()}
               >

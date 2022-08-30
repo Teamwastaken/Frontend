@@ -1,30 +1,80 @@
 * {
-  font-size: 20px;
+  font-size: 18px;
   color: white;
 }
 .body {
   background-color: black;
   max-width: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
-header {
-  background-color: black;
+.navbar {
+  background: black;
   width: 100%;
-  margin: auto;
-  padding: 10px;
   display: flex;
   position: fixed;
   justify-content: space-between;
 }
-.boxes {
-  padding-top: 8%;
-  margin: auto;
-  display: grid;
-  width: fit-content;
-  grid-template-columns: auto auto auto;
+.nav-element {
+  height: 100%;
+  max-height: 50px;
+}
+.button-newUser {
+  font-size: 16px;
+  border-radius: 7px;
+  padding: 10px 20px;
+  margin: 3px;
+}
+.green {
+  background: #04aa6d;
+}
+.green:hover {
+  background: #059862;
 }
 
+.boxes-container {
+  padding-top: 50px;
+  display: grid;
+}
+@media screen and (min-width: 300px) {
+  .boxes-container {
+    grid-template-columns: auto;
+  }
+}
+@media screen and (min-width: 600px) {
+  .boxes-container {
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (min-width: 900px) {
+  .boxes-container {
+    grid-template-columns: auto auto auto;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .boxes-container {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .boxes-container {
+    grid-template-columns: auto auto auto auto auto;
+  }
+}
+@media screen and (min-width: 1800px) {
+  .boxes-container {
+    grid-template-columns: auto auto auto auto auto auto;
+  }
+}
+@media screen and (min-width: 2100px) {
+  .boxes-container {
+    grid-template-columns: auto auto auto auto auto auto auto;
+  }
+}
+.button-container > button {
+  margin-right: 10px;
+}
 .box {
   border-radius: 20px;
   padding: 20px;
@@ -32,68 +82,15 @@ header {
   background: #202224;
   max-height: 600px;
 }
-.allow {
-  width: 100px;
-}
-@media screen and (min-width: 300px) {
-  .boxes {
-    grid-template-columns: auto;
-  }
-}
-@media screen and (min-width: 600px) {
-  .boxes {
-    grid-template-columns: auto auto;
-  }
-}
-@media screen and (min-width: 900px) {
-  .boxes {
-    grid-template-columns: auto auto auto;
-  }
-}
-@media screen and (min-width: 1200px) {
-  .boxes {
-    grid-template-columns: auto auto auto auto;
-  }
-}
-@media screen and (min-width: 1500px) {
-  .boxes {
-    grid-template-columns: auto auto auto auto auto;
-  }
-}
-@media screen and (min-width: 1800px) {
-  .boxes {
-    grid-template-columns: auto auto auto auto auto auto;
-  }
-}
-@media screen and (min-width: 2100px) {
-  .boxes {
-    grid-template-columns: auto auto auto auto auto auto auto;
-  }
+.center {
+  text-align: center;
 }
 .elementWrapper {
   display: flex;
+  justify-content: space-around;
 }
-.box-seperate {
+.box-element {
   margin: 10px;
-}
-.element {
-  padding: 10px;
-}
-.id {
-  text-align: center;
-  font-size: 17px;
-}
-.name {
-  font-size: 20px;
-}
-.button {
-  border: none;
-  border-radius: 8px;
-  background: #04aa6d;
-  margin-right: 10px;
-}
-.button-hover:hover {
-  background: #059862;
 }
 .orange {
   background: rgb(198, 114, 17);
@@ -101,50 +98,42 @@ header {
 .orange:hover {
   background: rgb(146, 80, 4);
 }
-.button-container {
-  display: flex;
-  justify-content: center;
-}
-.deleteButton {
-  background: red;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 10px;
+.button {
   border: none;
+  width: 110px;
 }
-.setButton {
-  background-color: #04aa6d;
-  padding-left: 25px;
-  padding-right: 25px;
+.red {
+  background: red;
 }
+.red:hover {
+  background: rgb(149, 8, 8);
+}
+
+/* Popups */
 .popup {
   visibility: hidden;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  width: 90%;
+  max-width: 400px;
   display: grid;
   background: #1c1d1d;
   z-index: 1000;
   border: 2px solid grey;
   border-radius: 10px;
 }
-.newUser {
-  margin-top: 5px;
-  height: 100%;
-}
-input {
-  margin: 20px;
-}
-.submit {
-  width: 50%;
-  margin: auto;
-  margin-bottom: 10px;
-}
 .active {
   visibility: visible;
 }
-.inputPopup {
-  color: black;
+.m-auto {
+  margin: auto;
+}
+.m-10 {
+  margin: 10px auto;
+}
+.input-popup {
+  width: 60%;
+  border-radius: 5px;
 }
