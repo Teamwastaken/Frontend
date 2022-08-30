@@ -35,22 +35,18 @@ class LoginForm extends Form {
     return (
       <div className="body">
         <h1 className="heading">Login</h1>
-        <form className="inputs" onSubmit={this.handleSubmit}>
-          <ul>
-            <li className="list-item">
-              {this.renderInput("username", "Username")}
-            </li>
+        <form className="form-items" onSubmit={this.handleSubmit}>
+          <div className="">{this.renderInput("username", "Username")}</div>
 
-            <li className="list-item">
-              {this.renderInput("password", "Password", "password")}
-            </li>
-            <li className="list-item">
-              <button className="input blue" type="submit">
-                {this.state.redirect && <Navigate to="/admin" replace={true} />}
-                Login
-              </button>
-            </li>
-          </ul>
+          <div className="form-items">
+            {this.renderInput("password", "Password", "password")}
+          </div>
+          <div className="form-items button-container">
+            <button className="button blue" type="submit">
+              {this.state.redirect && <Navigate to="/admin" replace={true} />}
+              Login
+            </button>
+          </div>
         </form>
       </div>
     );

@@ -6,7 +6,6 @@ class Form extends Component {
   state = {
     redirect: false,
     data: {},
-    errors: {},
   };
 
   handleSubmit = (event) => {

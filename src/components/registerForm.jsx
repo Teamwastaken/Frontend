@@ -21,8 +21,19 @@ class RegisterForm extends Form {
       this.setState({ errors });
       this.setState({ redirect: !this.state.redirect });
     } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.data === '"Name" is not allowed to be empty'
+      ) {
+        console.log("name");
+        const errors = { ...this.state.errors };
+        errors.name = ex.response.data;
+        this.setState({ errors });
+        return;
+      }
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
+        errors.name = null;
         errors.username = ex.response.data;
         this.setState({ errors });
       }
@@ -35,27 +46,21 @@ class RegisterForm extends Form {
     return (
       <div className="body">
         <h1 className="heading">Register</h1>
-        <form className="inputs" onSubmit={this.handleSubmit}>
-          <ul>
-            <li className="list-item">{this.renderInput("name", "Name")}</li>
+        <form className="form-items" onSubmit={this.handleSubmit}>
+          <div className="form-items">{this.renderInput("name", "Name")}</div>
+          <div className="form-items">
+            {this.renderInput("username", "Username")}
+          </div>
 
-            <li className="list-item">
-              <label className="error label">{this.state.errors.name}</label>
-            </li>
-            <li className="list-item">
-              {this.renderInput("username", "Username")}
-            </li>
-
-            <li className="list-item">
-              {this.renderInput("password", "Password", "password")}
-            </li>
-            <li className="list-item">
-              <button className="input blue" type="submit">
-                {this.state.redirect && <Navigate to="/admin" replace={true} />}
-                Register
-              </button>
-            </li>
-          </ul>
+          <div className="form-items">
+            {this.renderInput("password", "Password", "password")}
+          </div>
+          <div className="form-items button-container">
+            <button className="button blue" type="submit">
+              {this.state.redirect && <Navigate to="/admin" replace={true} />}
+              Register
+            </button>
+          </div>
         </form>
       </div>
     );
