@@ -13,7 +13,7 @@ class Admin extends Form {
     participants: [],
     value: "",
     errors: { access: "Acces denied", responseCode: null },
-    currentVotingName: "",
+    currentVoting: [],
   };
   componentDidMount() {
     this.getParticipants();
@@ -47,6 +47,7 @@ class Admin extends Form {
     const headers = {
       "x-auth-token": await localStorage.getItem("token"),
     };
+    console.log(this.state.deleteId);
     try {
       await axios.delete(
         config.apiUrl + "/api/persons/" + this.state.deleteId,
@@ -74,9 +75,9 @@ class Admin extends Form {
       alert(ex.response.data);
     }
   };
-  setCurrentVote = async (Id, name) => {
-    const obj = { currentVoting: Id };
-    this.setState({ currentVotingName: name });
+  setCurrentVote = async (participant) => {
+    const obj = { currentVoting: participant._id };
+    this.setState({ currentVoting: participant });
     try {
       const headers = {
         "x-auth-token": await localStorage.getItem("token"),
@@ -100,7 +101,7 @@ class Admin extends Form {
           headers: headers,
         }
       );
-      this.setState({ currentVotingName: participant.name });
+      this.setState({ currentVoting: participant });
     } catch (ex) {
       alert(ex);
     }
@@ -158,7 +159,10 @@ class Admin extends Form {
         <header className="navbar">
           <h1 className="nav-element">Dashboard</h1>
           <h2 className="nav-element">
-            CurrentVoting: {this.state.currentVotingName}
+            <a href={"#" + this.state.currentVoting._id}>
+              {" "}
+              CurrentVoting: {this.state.currentVoting.name}
+            </a>
           </h2>
           <button
             className="nav-element green button-newUser"
@@ -169,7 +173,11 @@ class Admin extends Form {
         </header>
         <div className="boxes-container">
           {ordered.map((participant) => (
-            <div className="box" key={participant._id}>
+            <div className="box" key={participant._id} id={participant._id}>
+              {this.state.currentVoting._id === participant._id ? (
+                <div className="badge1"> Current </div>
+              ) : null}
+
               <a
                 href={"voting/" + participant._id + "/noLocalstorage"}
                 target="_blanc"
@@ -200,10 +208,12 @@ class Admin extends Form {
               </div>
               <div className="button-container">
                 <button
-                  className="button setButton orange"
-                  onClick={() =>
-                    this.setCurrentVote(participant._id, participant.name)
+                  className={
+                    this.state.currentVoting._id === participant._id
+                      ? "button green"
+                      : "button orange"
                   }
+                  onClick={() => this.setCurrentVote(participant)}
                 >
                   Set
                 </button>
