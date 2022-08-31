@@ -15,6 +15,7 @@
   display: flex;
   position: fixed;
   justify-content: space-between;
+  z-index: 2;
 }
 .nav-element {
   height: 100%;
@@ -81,6 +82,8 @@
   margin: 20px;
   background: #202224;
   max-height: 600px;
+  position: relative;
+  z-index: 1;
 }
 .center {
   text-align: center;
@@ -136,4 +139,33 @@
 .input-popup {
   width: 60%;
   border-radius: 5px;
+}
+.badge1 {
+  position: absolute;
+  background-color: #5cacee;
+  text-align: center;
+  line-height: 50px;
+  width: 100px;
+  height: 50px;
+  visibility: visible;
+}
+
+.badge1:after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  transform: skew(20deg);
+  right: -15px;
+  width: 30px;
+  height: inherit;
+  background-color: #5cacee;
+}
+
+.badge1 {
+  top: 30px;
+  left: 0px;
+}
+.badge1:hover {
+  transition: all 1s;
+  top: 60px;
 }
