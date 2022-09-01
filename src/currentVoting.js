@@ -48,7 +48,8 @@ class CurrentVoting extends VotingFunction {
   render() {
     if (
       `{"person":"${this.state.participant._id}","voted":true}` ===
-      localStorage.getItem(`voted${this.state.participant._id}`)
+        localStorage.getItem(`voted${this.state.participant._id}`) ||
+      this.alreadyVoted === true
     )
       return (
         <div className="body">
