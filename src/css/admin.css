@@ -13,7 +13,6 @@
   background: black;
   width: 100%;
   display: flex;
-  position: fixed;
   justify-content: space-between;
   z-index: 2;
 }
@@ -35,12 +34,17 @@
 }
 
 .boxes-container {
-  padding-top: 50px;
   display: grid;
 }
 @media screen and (min-width: 300px) {
   .boxes-container {
+    overflow-y: scroll;
+    height: 100vh;
+    scroll-snap-type: y mandatory;
     grid-template-columns: auto;
+  }
+  .box {
+    scroll-snap-align: start;
   }
 }
 @media screen and (min-width: 600px) {

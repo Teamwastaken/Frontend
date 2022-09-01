@@ -1,23 +1,17 @@
-.body {
-  background-color: black;
-  width: 100vw;
-  min-height: 100vh;
-  padding: 0;
-  margin: 0;
-}
-
-.b1 {
-  color: white;
+.grey {
   background-color: #202224;
+}
+.grey:hover {
+  background-color: #161718;
+}
+.button-voting {
+  color: white;
   font-size: 30px;
   padding: 10px;
   border-radius: 10px;
 }
-.b1:hover {
-  background-color: #161718;
-}
 
-.buttondiv {
+.button-voting-container {
   max-width: 500px;
   margin: 0 auto;
   display: grid;
@@ -25,25 +19,4 @@
   column-gap: 20px;
   row-gap: 20px;
   padding: 20px;
-}
-
-.score {
-  margin: 20px;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-}
-
-.update_score {
-  margin: auto;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  background-color: #04aa6d;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-.update_score:hover {
-  background-color: #059862;
 }

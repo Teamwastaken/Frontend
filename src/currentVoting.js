@@ -1,8 +1,8 @@
 import React from "react";
 import VotingFunction from "./components/voting";
-import "./css/voteLSj.css";
 import axios from "axios";
 import config from "./config/config.json";
+import "./css/voteLSj.css";
 
 class CurrentVoting extends VotingFunction {
   state = {
@@ -55,35 +55,57 @@ class CurrentVoting extends VotingFunction {
     if (this.state.participant.length === 0)
       return <h1 className="body">Person could not be found.</h1>;
     if (this.state.participant.allowVotes === false) {
-      console.log("Check votes allowed");
       return (
         <div className="body">
-          <h1 className="buttondiv">Votes aren't allowed at the moment.</h1>
-          <button onClick={() => this.loadParticipant()} className="buttondiv">
-            Check again
-          </button>
+          <h1 className="heading">Votes aren't allowed at the moment.</h1>
+          <div className="button-container">
+            <button
+              className="button blue"
+              onClick={() => this.loadParticipant()}
+            >
+              Check again
+            </button>
+          </div>
         </div>
       );
     }
     return (
       <div className="body">
-        <div className="buttondiv">
-          <button onClick={() => this.handlePost(1, true)} className="b1">
+        <div className="button-voting-container">
+          <button
+            onClick={() => this.handlePost(1, true)}
+            className="button-voting grey"
+          >
             1 Punkt
           </button>
-          <button onClick={() => this.handlePost(2, true)} className="b1">
+          <button
+            onClick={() => this.handlePost(2, true)}
+            className="button-voting grey"
+          >
             2 Punkte
           </button>
-          <button onClick={() => this.handlePost(3, true)} className="b1">
+          <button
+            onClick={() => this.handlePost(3, true)}
+            className="button-voting grey"
+          >
             3 Punkte
           </button>
-          <button onClick={() => this.handlePost(4, true)} className="b1">
+          <button
+            onClick={() => this.handlePost(4, true)}
+            className="button-voting grey"
+          >
             4 Punkte
           </button>
-          <button onClick={() => this.handlePost(5, true)} className="b1">
+          <button
+            onClick={() => this.handlePost(5, true)}
+            className="button-voting grey"
+          >
             5 Punkte
           </button>
-          <button onClick={() => this.handlePost(6, true)} className="b1">
+          <button
+            onClick={() => this.handlePost(6, true)}
+            className="button-voting grey"
+          >
             6 Punkte
           </button>
         </div>
