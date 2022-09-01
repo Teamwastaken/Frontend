@@ -143,6 +143,7 @@
 .input-popup {
   width: 60%;
   border-radius: 5px;
+  color: black;
 }
 .badge1 {
   position: absolute;

@@ -53,7 +53,7 @@ class CurrentVoting extends VotingFunction {
     )
       return (
         <div className="body">
-          <h1 className="buttondiv">Already Voted</h1>
+          <h1 className="heading">Already Voted</h1>
         </div>
       );
     if (this.state.participant.length === 0)
