@@ -8,6 +8,7 @@ class CurrentVoting extends VotingFunction {
   state = {
     participant: [],
   };
+  alreadyVoted = false;
   componentDidMount() {
     this.loadParticipant();
   }
@@ -24,6 +25,8 @@ class CurrentVoting extends VotingFunction {
   handlePost = async (points, localStorageBool) => {
     const obj = { score: points };
     const voted = { person: this.state.participant._id, voted: true };
+    if (this.alreadyVoted === true) return alert("Already voted");
+    this.alreadyVoted = true;
     if (localStorageBool)
       localStorage.setItem(
         "voted" + this.state.participant._id,
