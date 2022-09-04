@@ -11,6 +11,7 @@
 }
 .navbar {
   background: black;
+  position: fixed;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -35,8 +36,18 @@
 
 .boxes-container {
   display: grid;
+  padding-top: 50px;
 }
-@media screen and (min-width: 300px) {
+.box {
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  background: #202224;
+  max-height: 600px;
+  position: relative;
+  z-index: 1;
+}
+@media screen and (max-width: 400px) {
   .boxes-container {
     overflow-y: scroll;
     height: 100vh;
@@ -44,7 +55,8 @@
     grid-template-columns: auto;
   }
   .box {
-    scroll-snap-align: start;
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
   }
 }
 @media screen and (min-width: 600px) {
@@ -79,15 +91,6 @@
 }
 .button-container > button {
   margin-right: 10px;
-}
-.box {
-  border-radius: 20px;
-  padding: 20px;
-  margin: 20px;
-  background: #202224;
-  max-height: 600px;
-  position: relative;
-  z-index: 1;
 }
 .center {
   text-align: center;
