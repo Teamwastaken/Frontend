@@ -176,7 +176,6 @@ class Admin extends Form {
               {this.state.currentVoting._id === participant._id ? (
                 <div className="badge1"> Current </div>
               ) : null}
-
               <a
                 href={"voting/" + participant._id + "/noLocalstorage"}
                 target="_blanc"
@@ -186,38 +185,31 @@ class Admin extends Form {
               </a>
               <div className="elementWrapper">
                 {" "}
-                <div className="">
-                  {" "}
-                  <div className="box-element">{participant.rank}.</div>
-                  <div className="box-element">{participant.score}</div>
-                </div>
-                <div className="">
-                  <div className="name box-element"> {participant.name}</div>
-                  <button
-                    className={
-                      participant.allowVotes
-                        ? "reset-margin button green box-element"
-                        : "reset-margin button orange box-element"
-                    }
-                    onClick={() => this.handleUpdate(participant)}
-                  >
-                    {participant.allowVotes ? "enabled" : "disabled"}
-                  </button>
-                </div>
-              </div>
-              <div className="button-container">
+                <div className="box-element">{participant.rank}.</div>
+                <div className="name box-element"> {participant.name}</div>
+                <div className="box-element">{participant.score}</div>
+                <button
+                  className={
+                    participant.allowVotes
+                      ? "reset-margin button green box-element"
+                      : "reset-margin button orange box-element"
+                  }
+                  onClick={() => this.handleUpdate(participant)}
+                >
+                  {participant.allowVotes ? "enabled" : "disabled"}
+                </button>
                 <button
                   className={
                     this.state.currentVoting._id === participant._id
-                      ? "button green"
-                      : "button orange"
+                      ? "button green box-elelement"
+                      : "button orange box-element"
                   }
                   onClick={() => this.setCurrentVote(participant)}
                 >
                   Set
                 </button>
                 <button
-                  className="button red deleteButton"
+                  className="button red deleteButton box-element"
                   onClick={() =>
                     this.setState({ popup2: true, deleteId: participant._id })
                   }
