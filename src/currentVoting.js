@@ -15,7 +15,7 @@ class CurrentVoting extends VotingFunction {
   loadParticipant = async () => {
     try {
       const { data: participant } = await axios.get(
-        config.apiUrl + "/api/persons/currentVoting"
+        config.apiUrl + "/api/participants/currentVoting"
       );
       this.setState({ participant });
     } catch (ex) {
@@ -33,7 +33,7 @@ class CurrentVoting extends VotingFunction {
         JSON.stringify(voted)
       );
     try {
-      await axios.post(config.apiUrl + "/api/persons/currentVoting", obj);
+      await axios.post(config.apiUrl + "/api/votes/currentVoting", obj);
       this.forceUpdate();
     } catch (error) {
       if (error.response.data.message === "Votes arent allowed.") {

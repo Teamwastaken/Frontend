@@ -15,7 +15,11 @@ class Vote extends VotingFunction {
 
   render() {
     if (this.state.participant.length === 0)
-      return <h1>Person could not be found.</h1>;
+      return (
+        <div className="body">
+          <h1 className="heading">Person could not be found.</h1>
+        </div>
+      );
 
     return (
       <div className="body">

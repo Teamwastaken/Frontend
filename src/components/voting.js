@@ -13,7 +13,13 @@ class VotingFunction extends Component {
     if (localStorageBool)
       localStorage.setItem("voted" + id, JSON.stringify(voted));
     try {
-      await axios.post(config.apiUrl + "/api/persons/" + id, obj);
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
+      await axios.post(config.apiUrl + "/api/votes/" + id, obj, {
+        headers: headers,
+      });
+
       this.forceUpdate();
     } catch (error) {
       if (error.response.data.message === "Votes arent allowed.") {
@@ -22,13 +28,20 @@ class VotingFunction extends Component {
         this.setState({ participant });
         localStorage.removeItem("voted" + id);
       }
-      console.log(error.response.data.message);
+      if (error.response.status === 401) {
+      }
     }
   };
   loadParticipant = async () => {
     try {
+      const headers = {
+        "x-auth-token": await localStorage.getItem("token"),
+      };
       const { data: participant } = await axios.get(
-        config.apiUrl + "/api/persons/" + this.props.id
+        config.apiUrl + "/api/participants/" + this.props.id,
+        {
+          headers: headers,
+        }
       );
       this.setState({ participant });
     } catch (ex) {

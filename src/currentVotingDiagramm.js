@@ -21,7 +21,7 @@ class CurrentVotingDiagram extends Form {
         "x-auth-token": await localStorage.getItem("token"),
       };
       const { data: participant } = await axios.get(
-        config.apiUrl + "/api/persons/currentVoting/admin",
+        config.apiUrl + "/api/participants/currentVoting/admin",
         {
           headers: headers,
         }

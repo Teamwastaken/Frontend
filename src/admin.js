@@ -27,7 +27,7 @@ class Admin extends Form {
         "x-auth-token": await localStorage.getItem("token"),
       };
       const { data: participants } = await axios.get(
-        config.apiUrl + "/api/persons",
+        config.apiUrl + "/api/participants",
         {
           headers: headers,
         }
@@ -50,7 +50,7 @@ class Admin extends Form {
     console.log(this.state.deleteId);
     try {
       await axios.delete(
-        config.apiUrl + "/api/persons/" + this.state.deleteId,
+        config.apiUrl + "/api/participants/" + this.state.deleteId,
         {
           headers: headers,
         }
@@ -65,7 +65,7 @@ class Admin extends Form {
       const headers = {
         "x-auth-token": await localStorage.getItem("token"),
       };
-      await axios.post(config.apiUrl + "/api/persons/newUser", obj, {
+      await axios.post(config.apiUrl + "/api/participants/newUser", obj, {
         headers: headers,
       });
 
@@ -82,7 +82,7 @@ class Admin extends Form {
       const headers = {
         "x-auth-token": await localStorage.getItem("token"),
       };
-      await axios.put(config.apiUrl + "/api/persons/currentVoting", obj, {
+      await axios.put(config.apiUrl + "/api/participants/currentVoting", obj, {
         headers: headers,
       });
     } catch (ex) {
@@ -95,7 +95,7 @@ class Admin extends Form {
         "x-auth-token": await localStorage.getItem("token"),
       };
       const { data: participant } = await axios.get(
-        config.apiUrl + "/api/persons/currentVoting/admin",
+        config.apiUrl + "/api/participants/currentVoting/admin",
         {
           headers: headers,
         }
@@ -113,7 +113,7 @@ class Admin extends Form {
     const p = new Promise((resolve, reject) => {
       resolve(
         axios.patch(
-          config.apiUrl + "/api/persons/" + participant._id,
+          config.apiUrl + "/api/participants/" + participant._id,
           {
             allowVotes: !participant.allowVotes,
           },
@@ -201,7 +201,7 @@ class Admin extends Form {
                 <button
                   className={
                     this.state.currentVoting._id === participant._id
-                      ? "button green box-elelement"
+                      ? "button green box-element"
                       : "button orange box-element"
                   }
                   onClick={() => this.setCurrentVote(participant)}

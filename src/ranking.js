@@ -14,7 +14,7 @@ class Ranking extends Component {
         "x-auth-token": await localStorage.getItem("token"),
       };
       const { data: participants } = await axios.get(
-        config.apiUrl + "/api/persons",
+        config.apiUrl + "/api/participants",
         { headers: headers }
       );
 
