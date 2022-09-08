@@ -43,6 +43,17 @@ class Admin extends Form {
       }
     }
   };
+  handleReset = async (participant) => {
+    const headers = {
+      "x-auth-token": await localStorage.getItem("token"),
+    };
+
+    try {
+      await axios.delete(config.apiUrl + "/api/votes/" + participant._id, {
+        headers: headers,
+      });
+    } catch (error) {}
+  };
   handleDelete = async () => {
     const headers = {
       "x-auth-token": await localStorage.getItem("token"),
@@ -58,7 +69,6 @@ class Admin extends Form {
     } catch (error) {}
   };
   handlePost = async () => {
-    console.log("handle Post", this.state.value);
     const obj = { name: this.state.value };
     this.setState({ popup: false });
     try {
@@ -207,6 +217,12 @@ class Admin extends Form {
                   onClick={() => this.setCurrentVote(participant)}
                 >
                   Set
+                </button>
+                <button
+                  className="button green box-element"
+                  onClick={() => this.handleReset(participant)}
+                >
+                  Reset
                 </button>
                 <button
                   className="button red deleteButton box-element"

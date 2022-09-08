@@ -20,7 +20,21 @@ class Vote extends VotingFunction {
           <h1 className="heading">Person could not be found.</h1>
         </div>
       );
-
+    if (this.state.participant.allowVotes === false) {
+      return (
+        <div className="body">
+          <h1 className="heading">Votes aren't allowed at the moment.</h1>
+          <div className="button-container">
+            <button
+              className="button blue"
+              onClick={() => this.loadParticipant()}
+            >
+              Check again
+            </button>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="body">
         <div className="button-voting-container">
