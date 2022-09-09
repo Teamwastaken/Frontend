@@ -11,7 +11,7 @@ class Form extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.doSubmit();
-    this.setState({ popup1: false, popup2: false });
+    this.setState({ popup1: false, popup2: false, popup3: false });
   };
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };

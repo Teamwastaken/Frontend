@@ -9,6 +9,8 @@ class Admin extends Form {
   state = {
     popup1: false,
     popup2: false,
+    popup3: false,
+    resetParticipant: {},
     deleteId: "",
     participants: [],
     value: "",
@@ -49,9 +51,12 @@ class Admin extends Form {
     };
 
     try {
-      await axios.delete(config.apiUrl + "/api/votes/" + participant._id, {
-        headers: headers,
-      });
+      await axios.delete(
+        config.apiUrl + "/api/votes/" + this.state.resetParticipant._id,
+        {
+          headers: headers,
+        }
+      );
     } catch (error) {}
   };
   handleDelete = async () => {
@@ -220,7 +225,12 @@ class Admin extends Form {
                 </button>
                 <button
                   className="button green box-element"
-                  onClick={() => this.handleReset(participant)}
+                  onClick={() =>
+                    this.setState({
+                      popup3: true,
+                      resetParticipant: participant,
+                    })
+                  }
                 >
                   Reset
                 </button>
@@ -265,6 +275,18 @@ class Admin extends Form {
               </button>
             </div>
           </form>
+          <form onSubmit={this.handleSubmit} className={this.getResetClasses()}>
+            <p className="center">Sure you want to reset this user?</p>
+            <div className="button-container">
+              <button
+                className="green button reset-margin"
+                type="submit"
+                onClick={() => this.handleReset()}
+              >
+                Yeah reset!
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     );
@@ -275,6 +297,10 @@ class Admin extends Form {
   }
   getDeleteClasses() {
     let classes = this.state.popup2 === true ? "popup active " : "popup";
+    return classes;
+  }
+  getResetClasses() {
+    let classes = this.state.popup3 === true ? "popup active " : "popup";
     return classes;
   }
 }
