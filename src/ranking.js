@@ -30,13 +30,14 @@ class Ranking extends Component {
     //sort it
     // if (this.state.participants.length === 0) return "No access";
     const ordered = _.orderBy(this.state.participants, "score", "desc");
+    const filtered = ordered.filter((x) => x.score >= 1200);
     return (
       <section className="body">
         <header>
           <h1 className="heading">Ranking</h1>
         </header>
         <body className="items">
-          {ordered.map((participant) => (
+          {filtered.map((participant) => (
             <div key={participant._id} className="item">
               {" "}
               {participant.rank + ". " + participant.name}
