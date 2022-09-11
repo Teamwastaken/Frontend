@@ -1,7 +1,12 @@
 .items {
   padding: 30px;
 }
-.item {
-  display: flex;
-  justify-content: space-between;
+
+.font-grey {
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  color: rgb(255, 255, 255);
 }

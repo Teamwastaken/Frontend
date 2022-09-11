@@ -34,14 +34,13 @@ class Ranking extends Component {
     return (
       <section className="body">
         <header>
-          <h1 className="heading">Ranking</h1>
+          <h1 className="font-grey">Ranking</h1>
         </header>
         <body className="items">
           {filtered.map((participant) => (
-            <div key={participant._id} className="item">
+            <div key={participant._id} className="item center">
               {" "}
               {participant.rank + ". " + participant.name}
-              <div className="">{participant.score} Punkte</div>
             </div>
           ))}
         </body>
