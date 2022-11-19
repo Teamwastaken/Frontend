@@ -44,20 +44,22 @@ class RegisterForm extends Form {
   };
   render() {
     return (
-      <div className="body">
-        <h1 className="heading">Register</h1>
-        <form className="form-items" onSubmit={this.handleSubmit}>
-          <div className="form-items">{this.renderInput("name", "Name")}</div>
-          <div className="form-items">
+      <div className='body'>
+        <h1 className='heading'>Register</h1>
+        <form className='form-items' onSubmit={this.handleSubmit}>
+          <div className='form-items'>{this.renderInput("name", "Name")}</div>
+          <div className='form-items'>
             {this.renderInput("username", "Username")}
           </div>
 
-          <div className="form-items">
+          <div className='form-items'>
             {this.renderInput("password", "Password", "password")}
           </div>
-          <div className="form-items button-container">
-            <button className="button blue" type="submit">
-              {this.state.redirect && <Navigate to="/admin" replace={true} />}
+          <div className='form-items button-container'>
+            <button className='button blue' type='submit'>
+              {this.state.redirect && (
+                <Navigate to='/myProfile' replace={true} />
+              )}
               Register
             </button>
           </div>
