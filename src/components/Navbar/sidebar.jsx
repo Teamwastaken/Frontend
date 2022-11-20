@@ -7,31 +7,38 @@ import {
   SidebarWrapper,
   SidebarMenu,
 } from "./sidebarStyles";
-const Sidebar = ({ isOpen, toggle }) => {
-  if (localStorage.getItem("logedIn") === "true")
-    return (
-      <SidebarContainer isOpen={isOpen} onClick={toggle}>
-        <Icon onClick={toggle}>
-          <CloseIcon />
-        </Icon>
-        <SidebarWrapper>
+const Sidebar = ({ isOpen, toggle, user }) => {
+  function LogOut() {
+    localStorage.setItem("logedIn", false);
+    localStorage.removeItem("token");
+    window.location = "/login";
+  }
+
+  return (
+    <SidebarContainer isOpen={isOpen} onClick={toggle}>
+      <Icon onClick={toggle}>
+        <CloseIcon />
+      </Icon>
+      <SidebarWrapper>
+        {user && (
           <SidebarMenu>
-            <SidebarLink to='/myprofile'>My Profile</SidebarLink>
-            <SidebarLink to='/'>Logout</SidebarLink>
+            <SidebarLink to='/myprofile'>{user.name}</SidebarLink>
+            <SidebarLink to='/'>
+              {" "}
+              <div className='navlink' onClick={() => LogOut()}>
+                Logout
+              </div>
+            </SidebarLink>
           </SidebarMenu>
-        </SidebarWrapper>
-      </SidebarContainer>
-    );
-  <SidebarContainer isOpen={isOpen} onClick={toggle}>
-    <Icon onClick={toggle}>
-      <CloseIcon />
-    </Icon>
-    <SidebarWrapper>
-      <SidebarMenu>
-        <SidebarLink to='/register'>Register</SidebarLink>
-        <SidebarLink to='/login'>Login</SidebarLink>
-      </SidebarMenu>
-    </SidebarWrapper>
-  </SidebarContainer>;
+        )}
+        {!user && (
+          <SidebarMenu>
+            <SidebarLink to='/register'>Register</SidebarLink>
+            <SidebarLink to='/login'>Login</SidebarLink>
+          </SidebarMenu>
+        )}
+      </SidebarWrapper>
+    </SidebarContainer>
+  );
 };
 export default Sidebar;

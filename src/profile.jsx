@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import config from "./config/config.json";
 import { Navigate } from "react-router-dom";
+
 class Profile extends Component {
   state = { user: {}, redirect: false };
   async componentDidMount() {
@@ -28,7 +29,10 @@ class Profile extends Component {
     return (
       <div>
         <h1>{this.state.user.name}</h1>
-        <h2>{this.state.user.email}</h2>
+        <h2>
+          {this.state.user.email}
+          {this.state.user.emailConfirmed ? "(confirmed)" : " (not confirmed)"}
+        </h2>
       </div>
     );
   }

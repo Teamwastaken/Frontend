@@ -6,7 +6,6 @@ import Form from "./common/form";
 
 class LoginForm extends Form {
   state = {
-    redirect: false,
     data: { username: "", password: "" },
     errors: { username: "" },
   };
@@ -17,7 +16,7 @@ class LoginForm extends Form {
       const { data: jwt } = await login(data.username, data.password);
       localStorage.setItem("token", jwt);
       localStorage.setItem("logedIn", true);
-      this.setState({ redirect: !this.state.redirect });
+      window.location = "/myProfile";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -54,9 +53,6 @@ class LoginForm extends Form {
 
           <div className='form-items button-container'>
             <button className='button blue' type='submit'>
-              {this.state.redirect && (
-                <Navigate to='/myProfile' replace={true} />
-              )}
               Login
             </button>
           </div>
