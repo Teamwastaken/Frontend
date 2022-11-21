@@ -24,7 +24,7 @@ class Profile extends Component {
   }
 
   render() {
-    if (localStorage.getItem("logedIn") === "false")
+    if (localStorage.getItem("logedIn") !== "false")
       return <Navigate to='/login' replace={true} />;
     return (
       <div>
