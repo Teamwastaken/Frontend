@@ -37,7 +37,7 @@ class ResetPassword extends Form {
           <div className=''>{this.renderInput("email", "Email")}</div>
           <div className='form-items button-container'>
             <button className='button blue' type='submit'>
-              Login
+              Send
             </button>
           </div>
         </form>

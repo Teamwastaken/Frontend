@@ -1,5 +1,5 @@
 import { FaBars } from "react-icons/fa";
-
+import auth from "../../services/authService";
 import {
   Nav,
   NavLogo,
@@ -10,17 +10,15 @@ import {
   NavMenu,
 } from "./navbarStyles";
 const Navbar = ({ toggle, user }) => {
-  console.log(user);
   function LogOut() {
-    localStorage.setItem("logedIn", false);
-    localStorage.removeItem("token");
+    auth.logout();
     window.location = "/login";
   }
 
   return (
     <Nav>
       <NavbarContainer>
-        <NavLogo to='../'>Hi</NavLogo>
+        <NavLogo to='../'>Event Einlass System</NavLogo>
         <MobileIcon onClick={toggle}>
           <FaBars />
         </MobileIcon>

@@ -8,17 +8,11 @@ class Profile extends Component {
   async componentDidMount() {
     //get data for participants
     try {
-      const headers = {
-        "x-auth-token": await localStorage.getItem("token"),
-      };
-      const { data: user } = await axios.get(config.apiUrl + "/api/user/me", {
-        headers: headers,
-      });
-
+      const { data: user } = await axios.get(config.apiUrl + "/api/user/me");
       this.setState({ user });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        console.error(ex.response.data);
       }
     }
   }

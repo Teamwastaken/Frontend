@@ -1,8 +1,8 @@
 import React from "react";
 import "../css/login.css";
-import { login } from "../services/authService";
 import { Navigate } from "react-router-dom";
 import Form from "./common/form";
+import auth from "../services/authService";
 
 class LoginForm extends Form {
   state = {
@@ -10,13 +10,12 @@ class LoginForm extends Form {
     errors: { username: "" },
   };
 
-  handlePost = async () => {
+  doSubmit = async () => {
     try {
       const { data } = this.state;
-      const { data: jwt } = await login(data.username, data.password);
-      localStorage.setItem("token", jwt);
-      localStorage.setItem("logedIn", true);
-      window.location = "/myProfile";
+
+      await auth.login(data.username, data.password);
+      window.location = "/admin";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -26,12 +25,9 @@ class LoginForm extends Form {
       }
     }
   };
-  doSubmit = () => {
-    this.handlePost();
-  };
   render() {
     if (localStorage.getItem("logedIn") === "true")
-      return <Navigate to='/myProfile' replace={true} />;
+      return <Navigate to='/admin' replace={true} />;
     return (
       <div className='body'>
         <h1 className='heading'>Login</h1>

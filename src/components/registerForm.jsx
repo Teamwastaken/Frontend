@@ -1,12 +1,11 @@
 import React from "react";
+import auth from "../services/authService";
 import "../css/login.css";
-import { register } from "./../services/registerService";
-import { Navigate } from "react-router-dom";
+import { register } from "./../services/userService";
 import Form from "./common/form";
 
 class RegisterForm extends Form {
   state = {
-    redirect: false,
     data: { name: "", username: "", password: "" },
     errors: { username: "", name: "" },
   };
@@ -15,17 +14,16 @@ class RegisterForm extends Form {
     try {
       const { data } = this.state;
       const response = await register(data.name, data.username, data.password);
-      localStorage.setItem("token", response.headers["x-auth-token"]);
+      auth.loginWithJwt(response.headers["x-auth-token"]);
       const errors = { ...this.state.errors };
       errors.username = "";
       this.setState({ errors });
-      this.setState({ redirect: !this.state.redirect });
+      window.location = "/login";
     } catch (ex) {
       if (
         ex.response &&
         ex.response.data === '"Name" is not allowed to be empty'
       ) {
-        console.log("name");
         const errors = { ...this.state.errors };
         errors.name = ex.response.data;
         this.setState({ errors });
@@ -57,9 +55,6 @@ class RegisterForm extends Form {
           </div>
           <div className='form-items button-container'>
             <button className='button blue' type='submit'>
-              {this.state.redirect && (
-                <Navigate to='/myProfile' replace={true} />
-              )}
               Register
             </button>
           </div>

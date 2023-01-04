@@ -11,7 +11,6 @@ class Form extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.doSubmit();
-    this.setState({ popup1: false, popup2: false, popup3: false });
   };
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
@@ -33,6 +32,7 @@ class Form extends Component {
         value={data[name]}
         error={errors[name]}
         label={label}
+        placeholder={`Enter ${label} here`}
       />
     );
   }

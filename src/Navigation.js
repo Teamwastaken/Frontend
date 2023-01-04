@@ -6,7 +6,6 @@ const Navigation = ({ user }) => {
 
   const toggle = () => {
     setIsOpen(!isOpen);
-    console.log("test");
   };
   return (
     <div>

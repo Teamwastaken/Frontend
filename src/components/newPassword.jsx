@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import "../css/login.css";
 import axios from "axios";
 import Form from "./common/form";
-import { Navigate } from "react-router-dom";
 
 function NewPasswordRapper() {
   let params = useParams();
@@ -24,7 +23,7 @@ class NewPassword extends Form {
       const apiEndpoint =
         config.apiUrl + "/api/user/resetPassword/" + this.props.token;
       await axios.post(apiEndpoint, { password: data.password });
-      this.setState({ redirect: !this.state.redirect });
+      window.location = "/login";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
       }
@@ -44,8 +43,7 @@ class NewPassword extends Form {
           </div>
           <div className='form-items button-container'>
             <button className='button blue' type='submit'>
-              Login
-              {this.state.redirect && <Navigate to='/login' replace={true} />}
+              Set New Password
             </button>
           </div>
         </form>
