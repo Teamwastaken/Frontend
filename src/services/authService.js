@@ -1,9 +1,11 @@
-import http from "./httpService";
 import config from "../config/config.json";
 import jwtDecode from "jwt-decode";
+import http from "./httpService";
 
 const apiEndpoint = config.apiUrl + "/api/auth";
 const tokenKey = "token";
+
+http.setJwt(getJwt());
 
 export async function login(email, password) {
   const { data: jwt } = await http.post(apiEndpoint, { email, password });

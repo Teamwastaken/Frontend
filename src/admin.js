@@ -6,6 +6,7 @@ import config from "./config/config.json";
 import { Navigate } from "react-router-dom";
 import http from "./services/httpService";
 import { getCustomers } from "./services/customerService";
+import SearchBox from "./components/common/searchBox";
 
 class AdminPanel extends Form {
   state = {
@@ -16,6 +17,8 @@ class AdminPanel extends Form {
     errors: { name: "" },
     checkinData: { _id: "", name: "", email: "", checkedIn: "false" },
     CheckInPopUp: false,
+    searchQuery: "",
+    selectedFilter: null,
   };
   doSubmit = () => {
     this.handlePost();
@@ -53,6 +56,17 @@ class AdminPanel extends Form {
       this.setState({ customers: originalCustomors });
     }
   };
+
+  getPagedData = () => {
+    const { customers, searchQuery } = this.state;
+
+    let filtered = customers;
+    if (searchQuery)
+      filtered = customers.filter((c) =>
+        c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+  };
+
   handleCheckIn = async (customer) => {
     console.log(customer);
 
@@ -73,16 +87,34 @@ class AdminPanel extends Form {
       this.setState({ customers: originalCustomors });
     }
   };
+
+  handleSearch = (query) => {
+    this.setState({ searchQuery: query, selectedFilter: null });
+  };
+
   async componentDidMount() {
     const { data: customers } = await getCustomers();
     this.setState({ customers });
   }
 
   render() {
+    const {
+      searchQuery,
+      checkinData,
+      CheckInPopUp,
+      checkIn,
+      NewCustomerPopup,
+    } = this.state;
+
     if (localStorage.getItem("logedIn") !== "true")
       return <Navigate to='/login' replace={true} />;
     const { customers } = this.state;
 
+    let filtered = customers;
+    if (searchQuery)
+      filtered = customers.filter((c) =>
+        c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
     return (
       <div>
         <p>{`Showing ${customers.length} customers.`}</p>
@@ -92,7 +124,7 @@ class AdminPanel extends Form {
         <button onClick={() => this.setState({ checkIn: true })}>
           Check In
         </button>
-        {this.state.NewCustomerPopup ? (
+        {NewCustomerPopup ? (
           <form className='form-items' onSubmit={this.handleSubmit}>
             {this.renderInput("name", "Name")}
             {this.renderInput("email", "Email")}
@@ -105,7 +137,7 @@ class AdminPanel extends Form {
         ) : (
           <div></div>
         )}
-        {this.state.checkIn ? (
+        {checkIn ? (
           <div className='form-items'>
             {this.renderInput("_id", "Id")}
 
@@ -121,21 +153,29 @@ class AdminPanel extends Form {
         ) : (
           <div></div>
         )}
-        {this.state.CheckInPopUp ? (
-          <div className={this.state.checkinData.checkedIn ? "red" : "green"}>
+        {CheckInPopUp ? (
+          <div className={checkinData.checkedIn ? "red" : "green"}>
             <p>
               {this.state.checkinData.checkedIn
                 ? "Already Checked In"
                 : "Now Checked In"}
             </p>
-            <p>{this.state.checkinData._id}</p>
-            <p>{this.state.checkinData.name}</p>
-            <p>{this.state.checkinData.email}</p>
-            <p>{String(this.state.checkinData.checkedIn)}</p>
+            <p>{checkinData._id}</p>
+            <p>{checkinData.name}</p>
+            <p>{checkinData.email}</p>
+            <p>{String(checkinData.checkedIn)}</p>
           </div>
         ) : (
           <div></div>
         )}
+
+        <div className='form-items'>
+          <SearchBox
+            className='input-container'
+            value={searchQuery}
+            onChange={this.handleSearch}
+          ></SearchBox>
+        </div>
         <table>
           <thead>
             <tr>
@@ -147,7 +187,7 @@ class AdminPanel extends Form {
             </tr>
           </thead>
           <tbody>
-            {customers.map((customer) => (
+            {filtered.map((customer) => (
               <tr key={customer._id || 0}>
                 <td>{customer._id}</td>
                 <td>{customer.name}</td>
