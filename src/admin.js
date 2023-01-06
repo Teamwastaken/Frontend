@@ -18,14 +18,14 @@ class AdminPanel extends Form {
     checkinData: { _id: "", name: "", email: "", checkedIn: "false" },
     CheckInPopUp: false,
     searchQuery: "",
-    selectedFilter: null,
+    checkedIn: null,
   };
   doSubmit = () => {
     this.handlePost();
   };
 
   handlePost = async () => {
-    const customers = [...this.state.customers];
+    const originalCustomers = [...this.state.customers];
     try {
       const customers = [...this.state.customers];
       const customer = {
@@ -35,10 +35,15 @@ class AdminPanel extends Form {
       };
       customers.push(customer);
       this.setState({ customers });
-
-      await http.post(config.apiUrl + "/api/customer", customer);
+      const { data: newCustomer } = await http.post(
+        config.apiUrl + "/api/customer",
+        customer
+      );
+      console.log(newCustomer);
+      originalCustomers.push(newCustomer);
+      this.setState({ customers: originalCustomers });
     } catch (ex) {
-      this.setState({ customers });
+      this.setState({ customers: originalCustomers });
       console.log(ex.response.data);
     }
   };
@@ -57,23 +62,10 @@ class AdminPanel extends Form {
     }
   };
 
-  getPagedData = () => {
-    const { customers, searchQuery } = this.state;
-
-    let filtered = customers;
-    if (searchQuery)
-      filtered = customers.filter((c) =>
-        c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
-      );
-  };
-
   handleCheckIn = async (customer) => {
     console.log(customer);
-
     const originalCustomors = this.state.customers;
-
     const url = config.apiUrl + `/api/customer/${customer._id}`;
-
     try {
       const { data: customer } = await http.patch(url);
       const checkedIn = { ...this.state.checkinData };
@@ -88,13 +80,29 @@ class AdminPanel extends Form {
     }
   };
 
-  handleSearch = (query) => {
-    this.setState({ searchQuery: query, selectedFilter: null });
+  changeQueryCheckedIn = async () => {
+    await this.setState({ checkedIn: !this.state.checkedIn });
+    console.log(this.state.checkedIn);
+    this.getPageData();
   };
+  clearQuery = async () => {
+    await this.setState({ checkedIn: null, searchQuery: "" });
+    this.getPageData();
+  };
+  handleSearch = async (query) => {
+    await this.setState({ searchQuery: query, selectedFilter: null });
 
-  async componentDidMount() {
-    const { data: customers } = await getCustomers();
+    this.getPageData();
+  };
+  getPageData = async () => {
+    const { data: customers } = await getCustomers(
+      this.state.searchQuery,
+      this.state.checkedIn
+    );
     this.setState({ customers });
+  };
+  componentDidMount() {
+    this.getPageData();
   }
 
   render() {
@@ -104,17 +112,12 @@ class AdminPanel extends Form {
       CheckInPopUp,
       checkIn,
       NewCustomerPopup,
+      customers,
     } = this.state;
 
     if (localStorage.getItem("logedIn") !== "true")
       return <Navigate to='/login' replace={true} />;
-    const { customers } = this.state;
 
-    let filtered = customers;
-    if (searchQuery)
-      filtered = customers.filter((c) =>
-        c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
-      );
     return (
       <div>
         <p>{`Showing ${customers.length} customers.`}</p>
@@ -124,6 +127,10 @@ class AdminPanel extends Form {
         <button onClick={() => this.setState({ checkIn: true })}>
           Check In
         </button>
+        <button onClick={() => this.changeQueryCheckedIn()}>
+          Change search query
+        </button>
+        <button onClick={() => this.clearQuery()}>Clear Filters</button>
         {NewCustomerPopup ? (
           <form className='form-items' onSubmit={this.handleSubmit}>
             {this.renderInput("name", "Name")}
@@ -169,14 +176,14 @@ class AdminPanel extends Form {
           <div></div>
         )}
 
-        <div className='form-items'>
+        <div className='form-items table'>
           <SearchBox
             className='input-container'
             value={searchQuery}
             onChange={this.handleSearch}
           ></SearchBox>
         </div>
-        <table>
+        <table className='table'>
           <thead>
             <tr>
               <th>Id</th>
@@ -187,7 +194,7 @@ class AdminPanel extends Form {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((customer) => (
+            {customers.map((customer) => (
               <tr key={customer._id || 0}>
                 <td>{customer._id}</td>
                 <td>{customer.name}</td>

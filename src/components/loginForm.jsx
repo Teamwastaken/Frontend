@@ -13,11 +13,10 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-
       await auth.login(data.username, data.password);
       window.location = "/admin";
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
+      if ((ex.response && ex.response.status === 400) || 403) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
         this.setState({ errors });
